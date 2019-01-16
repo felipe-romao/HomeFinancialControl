@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/mainBox">
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="2dp"
+            android:elevation="2dp"
+            android:background="@drawable/border_shadow"
+
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/main_income_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:background="@drawable/button_main"
+                android:stateListAnimator="@null"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/main_income_button_text" />
+
+            <Button
+                android:id="@+id/main_expense_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:background="@drawable/button_main"
+                android:stateListAnimator="@null"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/main_expense_button_text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_monthly_balance_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:id="@+id/main_table_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/border_shadow"
+                android:elevation="2dp"
+                android:stretchColumns="*"
+                android:shrinkColumns="*">
+
+                <TableRow
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginTop="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_span="3"
+                        android:text="@string/main_monthly_balance_title_textview_text"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp">
+
+                    <TextView
+                        android:id="@+id/main_monthly_balance_date_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_span="3"
+                        android:text="@string/main_date_default_textview_text"
+                        android:textSize="10dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_column="1"
+                        android:gravity="right"
+                        android:text="@string/main_monthly_income_textview_text" />
+
+                    <TextView
+                        android:id="@+id/main_monthly_income_value_textview"
+                        android:layout_column="2"
+                        android:layout_marginRight="6dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/monthly_value_defaut" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp">
+
+                    <TextView
+                        android:layout_column="1"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/main_monthly_expense_textview_text" />
+
+                    <TextView
+                        android:id="@+id/main_monthly_expense_value_textview"
+                        android:layout_column="2"
+                        android:layout_weight="1"
+                        android:layout_marginRight="6dp"
+                        android:gravity="right"
+                        android:text="@string/monthly_value_defaut" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp">
+
+                    <TextView
+                        android:layout_column="1"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/main_monthly_balance_textview_text" />
+
+                    <TextView
+                        android:id="@+id/main_monthly_balance_value_textview"
+                        android:layout_column="2"
+                        android:layout_weight="1"
+                        android:layout_marginRight="6dp"
+                        android:gravity="right"
+                        android:textStyle="bold"
+                        android:text="@string/monthly_value_defaut" />
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_summary_category_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:paddingBottom="6dp"
+            android:elevation="2dp"
+            android:background="@drawable/border_shadow"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/main_summary_category_title_textview_text"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/main_summary_category_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="main_summary_category_date"
+                android:textSize="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_gravity="center">
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/main_category_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_last_movements_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/border_shadow"
+            android:elevation="2dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="6dp"
+                android:textStyle="bold"
+                android:text="@string/main_last_movements_title_textview_text" />
+
+            <LinearLayout
+                android:id="@+id/main_last_movements_views"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <ListView
+                android:id="@+id/main_last_movements_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:scrollbars="none"
+                android:drawSelectorOnTop="false"
+                />
+            <!--<android.support.v4.widget.SwipeRefreshLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
+                <!---->
+            <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/main_new_movement_button"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="+"
+        android:textColor="#ffffff"
+        android:textSize="40sp"
+        android:elevation="6dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="right"
+        android:background="@drawable/fundo"
+         />
+</RelativeLayout>

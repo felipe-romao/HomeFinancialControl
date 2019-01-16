@@ -1,0 +1,43 @@
+package com.example.g508029.homefinancialcontrol.helper;
+
+import android.util.Log;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+public class FormatHelper {
+    private SimpleDateFormat dateFormat;
+    private NumberFormat numberFormat;
+    private Locale locale;
+
+    public FormatHelper(Locale locale){
+        this.locale       = locale;
+        this.dateFormat   = new SimpleDateFormat();
+        this.numberFormat = NumberFormat.getCurrencyInstance(locale);
+    }
+
+    public Locale getLocate(){
+        return this.locale;
+    }
+
+    public String fromDateToString(String pattern, Date date){
+        this.dateFormat.applyPattern(pattern);
+        return this.dateFormat.format(date);
+    }
+
+    public Date fromStringToDate(String pattern, String value) throws ParseException {
+        this.dateFormat.applyPattern(pattern);
+        return this.dateFormat.parse(value);
+    }
+
+    public String fromDoubleToCurrencyString(double value){
+        return numberFormat.format(value);
+    }
+
+    public double fromCurrencyStringToDouble(String currency) throws ParseException {
+        return numberFormat.parse(currency).doubleValue();
+    }
+}

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Controle Financeiro</string>
+    <string name="main_income_button_text"><font style="bold" size="36">+</font>\n\<font size="10">Receitas</font></string>
+    <string name="main_expense_button_text"><font style="bold" size="36">-</font>\n\<font size="10">Despesas</font></string>
+    <string name="main_monthly_balance_title_textview_text">Saldo mensal</string>
+    <string name="main_monthly_income_textview_text">Receita: </string>
+    <string name="main_monthly_expense_textview_text">Despesa: </string>
+    <string name="monthly_value_defaut">0,00</string>
+    <string name="main_monthly_balance_textview_text">Saldo: </string>
+    <string name="main_summary_category_title_textview_text">Resumo mensal por categoria</string>
+    <string name="main_last_movements_title_textview_text">Últimos lancamentos</string>
+    <string name="main_date_default_textview_text">mês, ano</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="transaction_fragment_value">Valor</string>
+    <string name="transaction_fragment_description">Escreva uma breve descrição</string>
+    <string name="transaction_fragment_category">Escolha uma categoria</string>
+    <string name="transaction_fragment_date">Insira uma data</string>
+    <string name="transaction_fragment_time">Insira uma hora</string>
+
+</resources>
