@@ -24,6 +24,11 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         this.dbHelper = new DBHelper(context);
     }
 
+    public SQLiteTransactionRepository(Context context, DBHelper dbHelper){
+        this.context = context;
+        this.dbHelper = dbHelper;
+    }
+
     @Override
     public void addTransaction(Transaction transaction){
         SQLiteDatabase db = dbHelper.getWritableDatabase();

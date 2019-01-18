@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static String DATABASE_NAME = "HomeFinancialControl";
+    public static String DATABASE_NAME = "HomeFinancialControl";
     private static final int VERSION = 1;
 
     public DBHelper(Context context) {
@@ -51,5 +51,17 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS \"Transaction\";");
 
         onCreate(db);
+    }
+
+    public void clearDbAndRecreate() {
+        clearDb();
+        onCreate(this.getWritableDatabase());
+    }
+
+    public void clearDb() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS Category;");
+        db.execSQL("DROP TABLE IF EXISTS PaymentMode;");
+        db.execSQL("DROP TABLE IF EXISTS \"Transaction\";");
     }
 }
