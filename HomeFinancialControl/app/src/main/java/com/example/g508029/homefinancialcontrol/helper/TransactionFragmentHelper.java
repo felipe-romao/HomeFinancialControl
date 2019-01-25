@@ -53,6 +53,7 @@ public class TransactionFragmentHelper {
         Log.d(TAG, "createTransaction: date2: " + date);
 
         date.setTime(this.formatHelper.fromStringToDate(HHmm_TIME_FORMAT_PATTERN, this.transactionTimeEditText.getText().toString()).getTime());
+        Log.d(TAG, "createTransaction: date3: " + date);
 
         String type             = this.transactionTypeTextView.getText().toString();
         String category         = this.transactionCategoriesSpinner.getSelectedItem().toString();

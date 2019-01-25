@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
+import static java.lang.String.format;
 
 public class SQLiteTransactionRepository implements TransactionRepository{
     private static String TABLE_NAME = "\"Transaction\"";
@@ -47,24 +48,37 @@ public class SQLiteTransactionRepository implements TransactionRepository{
     }
 
     @Override
-    public List<Transaction> getAllTransactionsByMonth(int month) {
+    public List<Transaction> getAllTransactionsByMonth(int month, int year) {
+        String monthFormatted = String.format("%02d", month);
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
-        String sql = "SELECT * FROM " + TABLE_NAME + ";";
-        Cursor cursor = db.rawQuery(sql, null);
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " +
+                "strftime('%m', date / 1000, 'unixepoch') = ? " +
+                "and " +
+                "strftime('%Y', date / 1000, 'unixepoch') = ? order by date ASC;";
+        String[] args = new String[]{monthFormatted, String.valueOf(year)};
+        Cursor cursor = db.rawQuery(sql, args);
 
         return populateTransactions(cursor);
     }
 
     @Override
     public void deleteTransaction(String id) {
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+        db.delete(TABLE_NAME, "id=?", new String[]{id});
+    }
 
+    @Override
+    public List<Transaction> getLastTransactions(int quantity){
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+        String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY date DESC LIMIT ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(quantity)});
+
+        return populateTransactions(cursor);
     }
 
     @NonNull
     private ContentValues getContentValues(Transaction transaction) {
         ContentValues values = new ContentValues();
-        //new Date(cursor.getLong(yourColumnIndex));
-
         values.put("id", transaction.getId());
         values.put("type", transaction.getType());
         values.put("value", transaction.getValue());

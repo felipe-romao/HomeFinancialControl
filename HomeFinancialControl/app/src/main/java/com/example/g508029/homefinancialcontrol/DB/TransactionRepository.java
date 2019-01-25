@@ -8,6 +8,7 @@ public interface TransactionRepository {
     void addTransaction(Transaction transaction);
     void updateTransaction(Transaction transaction);
     Transaction getTransactionById(String id);
-    List<Transaction> getAllTransactionsByMonth(int month);
+    List<Transaction> getAllTransactionsByMonth(int month, int year);
     void deleteTransaction(String id);
+    List<Transaction> getLastTransactions(int quantity);
 }

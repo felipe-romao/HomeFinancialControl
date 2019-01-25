@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 //        List<Transaction> transactions = new ArrayList<>();
 //        transactions.add(transaction);
 
-        TransactionsMonthly transactionsMonthly = new TransactionsMonthly(11, 2018, this.transactionRepository.getAllTransactionsByMonth(11));
+        TransactionsMonthly transactionsMonthly = new TransactionsMonthly(11, 2018, this.transactionRepository.getAllTransactionsByMonth(11, 2018));
         return transactionsMonthly;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.test.filters.LargeTest;
 import android.test.AndroidTestCase;
 
+import com.example.g508029.homefinancialcontrol.DataTestHelper;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 
 import org.junit.Before;
@@ -46,7 +47,7 @@ public class SQLiteTransactionRepositoryUnitTest extends AndroidTestCase {
         Transaction transactionAdded = new Transaction(EXPENSE_DESCRIPTION);
         this.repository.addTransaction(transactionAdded);
 
-        List<Transaction> transactions = this.repository.getAllTransactionsByMonth(1);
+        List<Transaction> transactions = this.repository.getAllTransactionsByMonth(1, 2019);
 
         assertEquals(1, transactions.size());
         assertEquals(transactionAdded.getId()           , transactions.get(0).getId());
@@ -57,4 +58,34 @@ public class SQLiteTransactionRepositoryUnitTest extends AndroidTestCase {
         assertEquals(transactionAdded.getType()         , transactions.get(0).getType());
         assertEquals(transactionAdded.getValue()        , transactions.get(0).getValue());
     }
+
+    @Test
+    public void addTransctions_getLastTransactions_returnTransactions(){
+        List<Transaction> transactions = DataTestHelper.createTransactionList();
+        for (Transaction transaction: transactions) {
+            this.repository.addTransaction(transaction);
+        }
+
+        List<Transaction> transactionsAdded = this.repository.getLastTransactions(2);
+
+        assertEquals("CATEGORY_TEST_2", transactionsAdded.get(0).getCategory());
+        assertEquals("CATEGORY_TEST_1", transactionsAdded.get(1).getCategory());
+    }
+
+    @Test
+    public void addTransctions_deleteFirstTransaction_returnTransactionsWithoutTransactionDeleted(){
+        List<Transaction> transactions = DataTestHelper.createTransactionList();
+        for (Transaction transaction: transactions) {
+            this.repository.addTransaction(transaction);
+        }
+        List<Transaction> transactionsBeforeDelete = this.repository.getAllTransactionsByMonth(1,2019);
+        assertEquals(1, transactionsBeforeDelete.size());
+
+        this.repository.deleteTransaction(transactions.get(0).getId());
+        List<Transaction> transactionsAfterDelete = this.repository.getAllTransactionsByMonth(1,2019);
+
+        assertEquals(0, transactionsAfterDelete.size());
+    }
 }
+
+
