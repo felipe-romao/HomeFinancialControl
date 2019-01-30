@@ -13,11 +13,29 @@ import static com.example.g508029.homefinancialcontrol.Constants.INCOME_DESCRIPT
 
 public class TransactionsMonthly {
     private Date period;
+
+    private int month;
+    private int year;
+    private double monthlyIncome;
+    private double monthlyExpense;
+    private HashMap<String, Double> categoriesTotalizer;
+
     private List<Transaction> transactions;
 
     public TransactionsMonthly(int month, int year, List<Transaction> transactions){
         this.period = new Date(year - 1900, month - 1, 1);
         this.transactions = transactions;
+        this.month = month;
+        this.year = year;
+        this.initializeValues();
+    }
+
+    public int getMonth(){
+        return this.month;
+    }
+
+    public int getYear(){
+        return this.year;
     }
 
     public double getMonthlyBalanceValue(){
@@ -29,25 +47,19 @@ public class TransactionsMonthly {
     }
 
     public double getMonthlyIncome() {
-        double monthlyIncome = 0.0;
-        for(Transaction transaction : this.transactions){
-            if (!transaction.getType().equals(INCOME_DESCRIPTION)) continue;
-            monthlyIncome += transaction.getValue();
-        }
-        return monthlyIncome;
+        return this.monthlyIncome;
     }
 
     public double getMonthlyExpense() {
-        double monthlyExpense = 0.0;
-        for(Transaction transaction : this.transactions){
-            if (!transaction.getType().equals(EXPENSE_DESCRIPTION)) continue;
-            monthlyExpense += transaction.getValue();
-        }
-        return monthlyExpense;
+        return this.monthlyExpense;
     }
 
     public List<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public HashMap<String, Double> getCategoriesTotalizer(){
+        return this.categoriesTotalizer;
     }
 
     public void setTransactions(List<Transaction> transactions) {
@@ -59,32 +71,31 @@ public class TransactionsMonthly {
     }
 
     public List<Transaction> getlastTransactions(int count){
-        List<Transaction> lastTransactions = new ArrayList<Transaction>();
-
-        if(this.transactions == null || this.transactions.size() == 0){
-            return lastTransactions;
-        }
-        int pos=this.transactions.size()-1;
-        int itemsAdded = 0;
-        while (pos >= 0 && count > itemsAdded) {
-            lastTransactions.add(this.transactions.get(pos));
-            pos--;
-            itemsAdded++;
-        }
-        return lastTransactions;
+        return null;
     }
 
-    public HashMap<String, Double> getCategoriesTotalizer(){
+    private void initializeValues(){
+        double monthlyExpense = 0.0;
+        double monthlyIncome = 0.0;
         HashMap<String, Double> maps = new HashMap<String, Double>();
-        for(Transaction transaction: transactions){
-            if(transaction.getType().equals(EXPENSE_DESCRIPTION)){
-                String key   = transaction.getCategory();
+
+        for(Transaction transaction : this.transactions){
+            if (transaction.getType().equals(EXPENSE_DESCRIPTION)){
+                monthlyExpense += transaction.getValue();
+
+                String key = transaction.getCategory();
                 double value = transaction.getValue();
                 if(maps.containsKey(key))
                     value += maps.get(key);
                 maps.put(key, value);
             }
+            if (transaction.getType().equals(INCOME_DESCRIPTION)) {
+                monthlyIncome += transaction.getValue();
+            }
         }
-        return maps;
+
+        this.monthlyIncome = monthlyIncome;
+        this.monthlyExpense = monthlyExpense;
+        this.categoriesTotalizer = maps;
     }
 }

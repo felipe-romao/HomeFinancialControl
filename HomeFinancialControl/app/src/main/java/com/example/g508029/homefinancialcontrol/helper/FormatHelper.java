@@ -2,10 +2,14 @@ package com.example.g508029.homefinancialcontrol.helper;
 
 import android.util.Log;
 
+import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class FormatHelper {
@@ -39,5 +43,13 @@ public class FormatHelper {
 
     public double fromCurrencyStringToDouble(String currency) throws ParseException {
         return numberFormat.parse(currency).doubleValue();
+    }
+
+    public List<String> getMonthNames(){
+        return Arrays.asList(new DateFormatSymbols(this.locale).getMonths());
+    }
+
+    public String getMonthNameCurrent(){
+        return this.getMonthNames().get(Calendar.getInstance(this.locale).MONTH);
     }
 }
