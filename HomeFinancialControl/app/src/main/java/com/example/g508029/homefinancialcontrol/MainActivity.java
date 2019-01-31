@@ -50,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
         this.monthly_balance_layout = findViewById(R.id.main_monthly_balance_linear_layout);
         this.transactionRepository  = new SQLiteTransactionRepository(this);
 
-        //this.mainActivityHelper.putValuesInActivity(this.createTransactionSummary());
         this.initializeItemsEvent();
-
 
         //registerForContextMenu(findViewById(R.id.main_last_movements_listview));
     }

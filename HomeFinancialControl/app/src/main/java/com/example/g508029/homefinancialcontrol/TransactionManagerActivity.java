@@ -34,7 +34,6 @@ public class TransactionManagerActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         transactionTypeSelected = intent.getStringExtra("TRANSCATION_TYPE_SELECTED");
-
         this.createTabLayouts();
         this.transactionRepository = new SQLiteTransactionRepository(this);
     }
@@ -48,23 +47,11 @@ public class TransactionManagerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        TransactionFragment fragment = (TransactionFragment) this.adpter.getItem(this.tabLayout.getSelectedTabPosition());
 
         switch (item.getItemId()){
             case R.id.transacions_save:
-                String fragmentType = this.adpter.getItem(this.tabLayout.getSelectedTabPosition()).toString();
-                try {
-                    Transaction transaction = fragment.getTransaction();
-                    this.transactionRepository.addTransaction(transaction);
-                    Log.d("NEW_TRANSACTION", "onOptionsItemSelected: Transaction type '"+transaction.getType()+
-                            "' add successfullly -> value: " + transaction.getValue());
-
-                    //Transaction transactionAdded = this.transactionRepository.getAllTransactionsByMonth(1).get(0);
-                    //Log.d("GET_TRANSACTION", "onOptionsItemSelected: transactionID added: " + transactionAdded.getId());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Toast.makeText(this, fragmentType, Toast.LENGTH_LONG).show();
+                TransactionFragment fragment = (TransactionFragment) this.adpter.getItem(this.tabLayout.getSelectedTabPosition());
+                fragment.addTransactionInDatabase();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -73,8 +60,8 @@ public class TransactionManagerActivity extends AppCompatActivity {
         ViewPager pager = findViewById(R.id.transactions_view_pager);
 
         this.adpter = new FragmentPagerAdpter(this, getSupportFragmentManager());
-        adpter.add(TransactionFragment.newIntance(new Transaction(INCOME_DESCRIPTION)), INCOME_DESCRIPTION);
-        adpter.add(TransactionFragment.newIntance(new Transaction(EXPENSE_DESCRIPTION)), EXPENSE_DESCRIPTION);
+        adpter.add(TransactionFragment.newIntance(INCOME_DESCRIPTION), INCOME_DESCRIPTION);
+        adpter.add(TransactionFragment.newIntance(EXPENSE_DESCRIPTION), EXPENSE_DESCRIPTION);
 
         pager.setAdapter(adpter);
 

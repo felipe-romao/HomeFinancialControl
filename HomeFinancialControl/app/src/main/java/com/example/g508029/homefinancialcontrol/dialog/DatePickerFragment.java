@@ -31,19 +31,10 @@ public class DatePickerFragment{
         this.context  = context;
         this.formatHelper = formatHelper;
         this.editText = editText;
-        this.initialize();
+        //this.initialize();
     }
 
-    public void show(){
-        this.datePickerDialog = new DatePickerDialog(context, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, dateSetListener, year, month, day);
-        datePickerDialog.show();
-    }
-
-    private String getDateFormatted(){
-        return this.formatHelper.fromDateToString(ddMMyy_DATE_FORMAT_PATTERN, new Date(year,month,day));
-    }
-
-    private void initialize(){
+    public void initialize(){
         Calendar c = Calendar.getInstance();
         try {
             if (!editText.getText().toString().isEmpty())
@@ -64,9 +55,22 @@ public class DatePickerFragment{
         }
     }
 
+    public void show(){
+        this.datePickerDialog = new DatePickerDialog(context, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, dateSetListener, year, month, day);
+        datePickerDialog.show();
+    }
+
+    private String getDateFormatted(){
+        Date date = new Date(year-1900,month,day);
+        return this.formatHelper.fromDateToString(ddMMyy_DATE_FORMAT_PATTERN, date);
+    }
+
     private DatePickerDialog.OnDateSetListener dateSetListener =
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year, int month, int day) {
+                    Log.d(TAG, "onDateSet: year" + view.getYear());
+                    Log.d(TAG, "onDateSet: month" + view.getMonth());
+                    Log.d(TAG, "onDateSet: day" + view.getDayOfMonth());
                     setYear(view.getYear());
                     setMonth(view.getMonth());
                     setDay(view.getDayOfMonth());

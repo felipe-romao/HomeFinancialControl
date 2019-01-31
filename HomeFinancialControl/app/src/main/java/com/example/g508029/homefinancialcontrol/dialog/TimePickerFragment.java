@@ -32,19 +32,10 @@ public class TimePickerFragment{
         this.context = context;
         this.formatHelper = formatHelper;
         this.editText = editText;
-        initialize();
+//        initialize();
     }
 
-    public void show(){
-        timePickerDialog = new TimePickerDialog(context, AlertDialog.THEME_HOLO_LIGHT, timeSetListener, hour, minute, true);
-        timePickerDialog.show();
-    }
-
-    private String getTimeFormatted(){
-        return this.formatHelper.fromDateToString(HHmm_TIME_FORMAT_PATTERN, new Time(hour,minute, 0));
-    }
-
-    private void initialize(){
+    public void initialize(){
         Calendar c = Calendar.getInstance();
         try {
             if (!editText.getText().toString().isEmpty())
@@ -61,6 +52,15 @@ public class TimePickerFragment{
         if(editText.getText().toString().isEmpty()){
             editText.setText(getTimeFormatted());
         }
+    }
+
+    public void show(){
+        timePickerDialog = new TimePickerDialog(context, AlertDialog.THEME_HOLO_LIGHT, timeSetListener, hour, minute, true);
+        timePickerDialog.show();
+    }
+
+    private String getTimeFormatted(){
+        return this.formatHelper.fromDateToString(HHmm_TIME_FORMAT_PATTERN, new Time(hour,minute, 0));
     }
 
     private TimePickerDialog.OnTimeSetListener timeSetListener =

@@ -71,6 +71,7 @@ public class MainActivityHelper {
         this.lastTranscationLayout.removeAllViewsInLayout();
         LayoutInflater inflater = LayoutInflater.from(this.activity);
 
+/*
         for(Transaction transaction:this.transactionsMonthly.getlastTransactions(10)){
             View view = inflater.inflate(R.layout.list_last_transactions, null, false);
 
@@ -84,8 +85,6 @@ public class MainActivityHelper {
 
             lastTranscationLayout.addView(view);
         }
-
-        //LastTransactionsAdapter adapter = new LastTransactionsAdapter(this.activity, this.formatHelper, this.transactionsMonthly.getlastTransactions(LAST_TRANSACTIONS_COUNTER));
-        //this.lastMovementsListView.setAdapter(adapter);
+*/
     }
 }
