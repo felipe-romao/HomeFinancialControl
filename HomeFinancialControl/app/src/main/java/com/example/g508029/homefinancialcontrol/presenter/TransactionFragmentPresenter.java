@@ -1,5 +1,7 @@
 package com.example.g508029.homefinancialcontrol.presenter;
 
+import android.util.Log;
+
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 import com.example.g508029.homefinancialcontrol.helper.TransactionHelper;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.UUID;
 
+import static android.content.ContentValues.TAG;
 import static com.example.g508029.homefinancialcontrol.Constants.HHmm_TIME_FORMAT_PATTERN;
 import static com.example.g508029.homefinancialcontrol.Constants.ddMMyy_DATE_FORMAT_PATTERN;
 
@@ -61,10 +64,19 @@ public class TransactionFragmentPresenter {
             double value        = this.formatHelper.fromCurrencyStringToDouble(this.view.getTransactionValue());
             String description  = this.view.getDescription();
             String paymentMode  = this.view.getPaymentMode();
-            Date date           = this.formatHelper.fromStringToDate(ddMMyy_DATE_FORMAT_PATTERN, this.view.getTransactionDate());
-            date.setTime(this.formatHelper.fromStringToDate(HHmm_TIME_FORMAT_PATTERN, this.view.getTransactionTime()).getTime());
 
-            Transaction transaction = new Transaction(id, type, description, value, date, category, paymentMode);
+            /*Date date           = this.formatHelper.fromStringToDate(ddMMyy_DATE_FORMAT_PATTERN, this.view.getTransactionDate());
+            Log.d(TAG, "onAddNewTransaction: date 1: " + date);
+            date.setTime(this.formatHelper.fromStringToDate(HHmm_TIME_FORMAT_PATTERN, this.view.getTransactionTime()).getTime());
+            Log.d(TAG, "onAddNewTransaction: date 2: " + date);
+*/
+            String dateAddFormat = ddMMyy_DATE_FORMAT_PATTERN + " " + HHmm_TIME_FORMAT_PATTERN;
+            String dateMerged = this.view.getTransactionDate() + " " + this.view.getTransactionTime();
+            Date newDate = this.formatHelper.fromStringToDate(dateAddFormat, dateMerged);
+            Log.d(TAG, "onAddNewTransaction: new date: " + newDate);
+
+
+            Transaction transaction = new Transaction(id, type, description, value, newDate, category, paymentMode);
             this.repository.addTransaction(transaction);
 
             initializeValues();

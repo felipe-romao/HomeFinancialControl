@@ -7,58 +7,128 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.g508029.homefinancialcontrol.DB.SQLiteTransactionRepository;
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
-import com.example.g508029.homefinancialcontrol.model.Category;
-import com.example.g508029.homefinancialcontrol.model.PaymentMode;
-import com.example.g508029.homefinancialcontrol.model.Transaction;
-import com.example.g508029.homefinancialcontrol.model.TransactionsMonthly;
+import com.example.g508029.homefinancialcontrol.helper.ChartHelper;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
-import com.example.g508029.homefinancialcontrol.helper.MainActivityHelper;
+import com.example.g508029.homefinancialcontrol.presenter.MainPresenter;
+import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
+import com.github.mikephil.charting.charts.PieChart;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import static com.example.g508029.homefinancialcontrol.Constants.EXPENSE_DESCRIPTION;
 import static com.example.g508029.homefinancialcontrol.Constants.INCOME_DESCRIPTION;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainPresenter.IMainView{
+
+    private TextView monthlyIncomeValueTextView;
+    private TextView monthlyExpenseValueTextView;
+    private TextView monthlyBalanceValueTextView;
+    private TextView monthlyBalanceDateTextView;
+    private TextView summaryCategoryTextView;
+    private ListView lastMovementsListView;
+    private PieChart categoryChart;
     private Button expenseButton;
     private Button incomeButton;
     private Button transactionNewButton;
     private LinearLayout monthly_balance_layout;
-    private MainActivityHelper mainActivityHelper;
+    private LinearLayout lastTranscationLayout;
+
     private FormatHelper formatHelper;
     private TransactionRepository transactionRepository;
+    private MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Locale mLocale = new Locale("pt", "BR");
-        this.formatHelper = new FormatHelper(mLocale);
-        this.mainActivityHelper     = new MainActivityHelper(this, this.formatHelper);
-        this.expenseButton          = findViewById(R.id.main_expense_button);
-        this.incomeButton           = findViewById(R.id.main_income_button);
-        this.transactionNewButton   = findViewById(R.id.main_new_movement_button);
-        this.monthly_balance_layout = findViewById(R.id.main_monthly_balance_linear_layout);
-        this.transactionRepository  = new SQLiteTransactionRepository(this);
-
-        this.initializeItemsEvent();
-
         //registerForContextMenu(findViewById(R.id.main_last_movements_listview));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        this.mainActivityHelper.putValuesInActivity(this.createTransactionSummary());
+        this.startUpConfig();
+    }
+
+    @Override
+    public void setMonthlyIncomeValue(String value) {
+        this.monthlyIncomeValueTextView.setText(value);
+    }
+
+    @Override
+    public void setMonthlyExpenseValue(String value) {
+        this.monthlyExpenseValueTextView.setText(value);
+    }
+
+    @Override
+    public void setMonthlyBalanceValue(String value) {
+        this.monthlyBalanceValueTextView.setText(value);
+    }
+
+    @Override
+    public void setMonthlyBalanceDate(String date) {
+        this.monthlyBalanceDateTextView.setText(date);
+    }
+
+    @Override
+    public void setSummaryCategory(String category) {
+        this.summaryCategoryTextView.setText(category);
+    }
+
+    @Override
+    public void setLastTransactions(List<TransactionModelView> transactions) {
+        this.lastTranscationLayout.removeAllViewsInLayout();
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        for(TransactionModelView modelView: transactions){
+            View view = inflater.inflate(R.layout.list_last_transactions, null, false);
+
+            TextView transactionCategoryTextView = view.findViewById(R.id.last_transaction_category_textview);
+            TextView transactionValueTextView    = view.findViewById(R.id.last_transaction_value_textview);
+            TextView transactionTypeTextView     = view.findViewById(R.id.last_transaction_type_textview);
+
+            transactionCategoryTextView.setText(modelView.getCategory());
+            transactionValueTextView.setText(modelView.getValue());
+            transactionTypeTextView.setText(modelView.getType());
+
+            lastTranscationLayout.addView(view);
+        }
+    }
+
+    @Override
+    public void setCategoryChart(HashMap<String, Double> values) {
+        ChartHelper.setValues(this.categoryChart, values);
+    }
+
+    private void getItemsFromActivity(){
+        this.monthlyIncomeValueTextView     = findViewById(R.id.main_monthly_income_value_textview);
+        this.monthlyExpenseValueTextView    = findViewById(R.id.main_monthly_expense_value_textview);
+        this.monthlyBalanceValueTextView    = findViewById(R.id.main_monthly_balance_value_textview);
+        this.monthlyBalanceDateTextView     = findViewById(R.id.main_monthly_balance_date_textview);
+        this.summaryCategoryTextView        = findViewById(R.id.main_summary_category_textview);
+        this.lastMovementsListView          = findViewById(R.id.main_last_movements_listview);
+        this.categoryChart                  = findViewById(R.id.main_category_chart);
+        this.expenseButton                  = findViewById(R.id.main_expense_button);
+        this.incomeButton                   = findViewById(R.id.main_income_button);
+        this.transactionNewButton           = findViewById(R.id.main_new_movement_button);
+        this.monthly_balance_layout         = findViewById(R.id.main_monthly_balance_linear_layout);
+        this.lastTranscationLayout          = findViewById(R.id.main_last_movements_views);
+    }
+
+    private void initialize(){
+        Locale mLocale = new Locale("pt", "BR");
+        this.formatHelper = new FormatHelper(mLocale);
+        this.transactionRepository  = new SQLiteTransactionRepository(this);
+        this.presenter = new MainPresenter(this, this.transactionRepository, this.formatHelper);
+        this.presenter.initialize();
     }
 
     private void initializeItemsEvent(){
@@ -96,16 +166,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private TransactionsMonthly createTransactionSummary(){
-        //String id, String type, String description, double value, Date date, Category category, PaymentMode paymentMode)
-//        Calendar c = Calendar.getInstance();
-//        Category category = new Category("ID", "ALIMENTACAO", "DESPESA");
-//        PaymentMode paymentMode = new PaymentMode("ID", "DINHEIRO");
-//        Transaction transaction = new Transaction("TRANS_ID", "DESPESA", "", 10.0, c.getTime(), "ALIMENTACAO", "DINHEIRO");
-//        List<Transaction> transactions = new ArrayList<>();
-//        transactions.add(transaction);
-
-        TransactionsMonthly transactionsMonthly = new TransactionsMonthly(11, 2018, this.transactionRepository.getAllTransactionsByMonth(11, 2018));
-        return transactionsMonthly;
+    private void startUpConfig(){
+        this.getItemsFromActivity();
+        this.initialize();
+        this.initializeItemsEvent();
     }
 }

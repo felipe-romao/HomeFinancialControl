@@ -1,5 +1,7 @@
 package com.example.g508029.homefinancialcontrol;
 
+import android.util.Log;
+
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.model.TransactionsMonthly;
@@ -7,6 +9,8 @@ import com.example.g508029.homefinancialcontrol.model.TransactionsYearly;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class TransactionsBuilder {
     private TransactionRepository repository;
@@ -17,6 +21,7 @@ public class TransactionsBuilder {
 
     public TransactionsMonthly buildTransactionsMonthly(int month, int year){
         List<Transaction> transactions = this.repository.getAllTransactionsByMonth(month, year);
+        Log.d(TAG, "buildTransactionsMonthly: size transactions: " + transactions.size());
         return new TransactionsMonthly(month, year, transactions);
     }
 

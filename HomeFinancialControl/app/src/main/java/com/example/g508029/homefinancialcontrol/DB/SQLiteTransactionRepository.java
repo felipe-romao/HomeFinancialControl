@@ -58,6 +58,8 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         String[] args = new String[]{monthFormatted, String.valueOf(year)};
         Cursor cursor = db.rawQuery(sql, args);
 
+        //String sql2 = "SELECT * FROM " + TABLE_NAME;
+        //Cursor cursor = db.rawQuery(sql2, null);
         return populateTransactions(cursor);
     }
 
@@ -86,6 +88,10 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         values.put("category", transaction.getCategory());
         values.put("payment_mode", transaction.getPaymentMode());
         values.put("description", transaction.getDescription());
+
+        Log.d(TAG, "getContentValues: date to value '"+ transaction.getValue() +"': " + transaction.getDate());
+        Log.d(TAG, "getContentValues: values to add : " + values);
+
         return values;
     }
 
@@ -100,7 +106,11 @@ public class SQLiteTransactionRepository implements TransactionRepository{
             transaction.setCategory(cursor.getString(cursor.getColumnIndex("category")));
             transaction.setDescription(cursor.getString(cursor.getColumnIndex("description")));
             transaction.setPaymentMode(cursor.getString(cursor.getColumnIndex("payment_mode")));
-            transaction.setDate(new Date(cursor.getLong(cursor.getColumnIndex("date"))));
+
+            Date date = new Date(cursor.getLong(cursor.getColumnIndex("date")));
+            Log.d(TAG, "populateTransactions: date added to value '"+ transaction.getValue() +"': " + date);
+
+            transaction.setDate(date);
 
             transactions.add(transaction);
         }

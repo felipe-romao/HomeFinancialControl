@@ -1,5 +1,8 @@
 package com.example.g508029.homefinancialcontrol.helper;
 
+import com.example.g508029.homefinancialcontrol.model.Transaction;
+import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,5 +45,21 @@ public final class TransactionHelper {
                 break;
         }
         return kinds;
+    }
+
+    public static List<TransactionModelView> toTransactionsModelViewList(List<Transaction> transactions, FormatHelper formatHelper){
+        List<TransactionModelView> transactionModelViews = new ArrayList<>();
+        for (Transaction transaction: transactions){
+            transactionModelViews.add(TransactionHelper.toTransactionModelView(transaction, formatHelper));
+        }
+        return transactionModelViews;
+    }
+
+    public static TransactionModelView toTransactionModelView(Transaction transaction, FormatHelper formatHelper){
+        TransactionModelView modelView = new TransactionModelView();
+        modelView.setCategory(transaction.getCategory());
+        modelView.setType(transaction.getType());
+        modelView.setValue(formatHelper.fromDoubleToCurrencyString(transaction.getValue()));
+        return modelView;
     }
 }
