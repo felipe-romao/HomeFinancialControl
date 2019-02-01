@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
 
             transactionCategoryTextView.setText(modelView.getCategory());
             transactionValueTextView.setText(modelView.getValue());
-            transactionTypeTextView.setText(modelView.getType());
+            transactionTypeTextView.setText(modelView.getTypeSymbol());
 
             lastTranscationLayout.addView(view);
         }

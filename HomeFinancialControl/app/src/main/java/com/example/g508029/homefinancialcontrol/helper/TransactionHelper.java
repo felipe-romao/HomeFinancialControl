@@ -1,5 +1,6 @@
 package com.example.g508029.homefinancialcontrol.helper;
 
+import com.example.g508029.homefinancialcontrol.Constants;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
 
@@ -60,6 +61,7 @@ public final class TransactionHelper {
         modelView.setCategory(transaction.getCategory());
         modelView.setType(transaction.getType());
         modelView.setValue(formatHelper.fromDoubleToCurrencyString(transaction.getValue()));
+        modelView.setTypeSymbol(Constants.getTransactionSymbol(transaction.getType()));
         return modelView;
     }
 }

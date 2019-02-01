@@ -57,9 +57,6 @@ public class SQLiteTransactionRepository implements TransactionRepository{
                 "strftime('%Y', date / 1000, 'unixepoch') = ? order by date ASC;";
         String[] args = new String[]{monthFormatted, String.valueOf(year)};
         Cursor cursor = db.rawQuery(sql, args);
-
-        //String sql2 = "SELECT * FROM " + TABLE_NAME;
-        //Cursor cursor = db.rawQuery(sql2, null);
         return populateTransactions(cursor);
     }
 
@@ -88,10 +85,6 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         values.put("category", transaction.getCategory());
         values.put("payment_mode", transaction.getPaymentMode());
         values.put("description", transaction.getDescription());
-
-        Log.d(TAG, "getContentValues: date to value '"+ transaction.getValue() +"': " + transaction.getDate());
-        Log.d(TAG, "getContentValues: values to add : " + values);
-
         return values;
     }
 
@@ -101,20 +94,15 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         while (cursor.moveToNext()){
             String type = cursor.getString(cursor.getColumnIndex("type"));
             Transaction transaction = new Transaction(type);
+            Date date = new Date(cursor.getLong(cursor.getColumnIndex("date")));
+            transaction.setDate(date);
             transaction.setId(cursor.getString(cursor.getColumnIndex("id")));
             transaction.setValue(cursor.getDouble(cursor.getColumnIndex("value")));
             transaction.setCategory(cursor.getString(cursor.getColumnIndex("category")));
             transaction.setDescription(cursor.getString(cursor.getColumnIndex("description")));
             transaction.setPaymentMode(cursor.getString(cursor.getColumnIndex("payment_mode")));
-
-            Date date = new Date(cursor.getLong(cursor.getColumnIndex("date")));
-            Log.d(TAG, "populateTransactions: date added to value '"+ transaction.getValue() +"': " + date);
-
-            transaction.setDate(date);
-
             transactions.add(transaction);
         }
-
         return transactions;
     }
 }

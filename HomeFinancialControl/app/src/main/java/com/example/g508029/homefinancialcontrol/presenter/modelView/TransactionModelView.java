@@ -4,6 +4,15 @@ public class TransactionModelView {
     private String category;
     private String value;
     private String type;
+    private String typeSymbol;
+
+    public String getTypeSymbol() {
+        return typeSymbol;
+    }
+
+    public void setTypeSymbol(String typeSymbol) {
+        this.typeSymbol = typeSymbol;
+    }
 
     public String getCategory() {
         return category;

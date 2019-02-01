@@ -21,7 +21,6 @@ public class TransactionsBuilder {
 
     public TransactionsMonthly buildTransactionsMonthly(int month, int year){
         List<Transaction> transactions = this.repository.getAllTransactionsByMonth(month, year);
-        Log.d(TAG, "buildTransactionsMonthly: size transactions: " + transactions.size());
         return new TransactionsMonthly(month, year, transactions);
     }
 

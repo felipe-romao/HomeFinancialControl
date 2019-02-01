@@ -48,10 +48,6 @@ public class MainPresenter {
         int yearCurrent   = calendar.get(Calendar.YEAR);
         Date dateCurrent  = calendar.getTime();
 
-        Log.d(TAG, "initialize: month: " + monthCurrent);
-        Log.d(TAG, "initialize: year: " + yearCurrent);
-        Log.d(TAG, "initialize: date: " + dateCurrent);
-
         TransactionsBuilder transactionsBuilder = new TransactionsBuilder(repository);
         TransactionsMonthly transactionsMonthlyCurrent = transactionsBuilder.buildTransactionsMonthly(monthCurrent, yearCurrent);
 
@@ -61,12 +57,6 @@ public class MainPresenter {
         String monthlyBalanceValue = this.formatHelper.fromDoubleToCurrencyString(transactionsMonthlyCurrent.getMonthlyBalanceValue());
         HashMap<String, Double> chartValuesHashMap = transactionsMonthlyCurrent.getCategoriesTotalizer();
         List<Transaction> lastTransactions = this.repository.getLastTransactions(LAST_TRANSACTIONS_COUNTER);
-
-        Log.d(TAG, "initialize: monthly income: " + monthlyIncomeValue);
-        Log.d(TAG, "initialize: monthly expense: " + monthlyExpenseValue);
-        Log.d(TAG, "initialize: monthly balance: " + monthlyBalanceValue);
-        Log.d(TAG, "initialize: monthly chars keysets: " + chartValuesHashMap.keySet());
-
 
         this.view.setMonthlyBalanceDate(periodText);
         this.view.setSummaryCategory(periodText);

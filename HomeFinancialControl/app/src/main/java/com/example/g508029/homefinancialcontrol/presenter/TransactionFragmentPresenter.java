@@ -7,6 +7,7 @@ import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 import com.example.g508029.homefinancialcontrol.helper.TransactionHelper;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -64,19 +65,9 @@ public class TransactionFragmentPresenter {
             double value        = this.formatHelper.fromCurrencyStringToDouble(this.view.getTransactionValue());
             String description  = this.view.getDescription();
             String paymentMode  = this.view.getPaymentMode();
+            Date date           = this.getDateFromView();
 
-            /*Date date           = this.formatHelper.fromStringToDate(ddMMyy_DATE_FORMAT_PATTERN, this.view.getTransactionDate());
-            Log.d(TAG, "onAddNewTransaction: date 1: " + date);
-            date.setTime(this.formatHelper.fromStringToDate(HHmm_TIME_FORMAT_PATTERN, this.view.getTransactionTime()).getTime());
-            Log.d(TAG, "onAddNewTransaction: date 2: " + date);
-*/
-            String dateAddFormat = ddMMyy_DATE_FORMAT_PATTERN + " " + HHmm_TIME_FORMAT_PATTERN;
-            String dateMerged = this.view.getTransactionDate() + " " + this.view.getTransactionTime();
-            Date newDate = this.formatHelper.fromStringToDate(dateAddFormat, dateMerged);
-            Log.d(TAG, "onAddNewTransaction: new date: " + newDate);
-
-
-            Transaction transaction = new Transaction(id, type, description, value, newDate, category, paymentMode);
+            Transaction transaction = new Transaction(id, type, description, value, date, category, paymentMode);
             this.repository.addTransaction(transaction);
 
             initializeValues();
@@ -99,5 +90,11 @@ public class TransactionFragmentPresenter {
             throw new RuntimeException("selecione uma categoria.");
         if(this.view.getPaymentMode() == null || this.view.getPaymentMode().isEmpty())
             throw new RuntimeException("selecione um modo de pagamento ou recebimento.");
+    }
+
+    private Date getDateFromView() throws ParseException {
+        String dateAddFormat = ddMMyy_DATE_FORMAT_PATTERN + " " + HHmm_TIME_FORMAT_PATTERN;
+        String dateMerged = this.view.getTransactionDate() + " " + this.view.getTransactionTime();
+        return this.formatHelper.fromStringToDate(dateAddFormat, dateMerged);
     }
 }
