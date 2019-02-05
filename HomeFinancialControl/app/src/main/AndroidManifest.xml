@@ -16,8 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TransactionManagerActivity"></activity>
-        <activity android:name=".TransactionYearlyReportActivity"></activity>
+        <activity android:name=".TransactionManagerActivity" />
+        <activity android:name=".TransactionYearlyReportActivity" />
+        <activity android:name=".PaymentModeManagerActivity"></activity>
     </application>
 
 </manifest>
