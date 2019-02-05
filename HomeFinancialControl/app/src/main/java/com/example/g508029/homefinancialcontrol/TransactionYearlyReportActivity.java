@@ -74,23 +74,6 @@ public class TransactionYearlyReportActivity extends AppCompatActivity implement
     public void setTransactionsMonthlyValueList(List<TransactionsMonthlyModelView> modelViews) {
         this.transactionsYearlyAdapter = new TransactionYearlyReportAdpter(this, modelViews);
         this.transactionMonthylistView.setAdapter(this.transactionsYearlyAdapter);
-
-        /*this.transacitonslistLayout.removeAllViewsInLayout();
-        LayoutInflater inflater = LayoutInflater.from(this);
-        for (TransactionsMonthlyModelView modelView: modelViews){
-            View view = inflater.inflate(R.layout.transactions_monthly_list, null, false);
-            TextView incomeMonthlyTextView = view.findViewById(R.id.transactions_monthly_list_income_value_textview);
-            TextView expenseMonthlyTextView = view.findViewById(R.id.transactions_monthly_list_expense_value_textview);
-            TextView balanceMonthlyTextView = view.findViewById(R.id.transactions_monthly_list_balance_value_textview);
-            TextView dateMonthlyTextView = view.findViewById(R.id.transactions_monthly_list_date_textview);
-
-            incomeMonthlyTextView.setText(modelView.getIncomeValue());
-            expenseMonthlyTextView.setText(modelView.getExpenseValue());
-            balanceMonthlyTextView.setText(modelView.getBalanceValue());
-            dateMonthlyTextView.setText(modelView.getDate());
-
-            this.transacitonslistLayout.addView(view);
-        }*/
     }
 
     @Override

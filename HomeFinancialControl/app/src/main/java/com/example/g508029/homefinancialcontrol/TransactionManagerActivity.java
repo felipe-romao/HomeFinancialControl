@@ -52,6 +52,8 @@ public class TransactionManagerActivity extends AppCompatActivity {
     private void createTabLayouts(){
         ViewPager pager = findViewById(R.id.transactions_view_pager);
 
+        //TODO: check to make a build or factory of the tab layouts values
+
         this.adpter = new FragmentPagerAdpter(this, getSupportFragmentManager());
         adpter.add(TransactionFragment.newIntance(INCOME_DESCRIPTION), INCOME_DESCRIPTION);
         adpter.add(TransactionFragment.newIntance(EXPENSE_DESCRIPTION), EXPENSE_DESCRIPTION);
