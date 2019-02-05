@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TransactionYearlyReportActivity">
+
+    <LinearLayout
+        android:id="@+id/transaction_yearly_rpt_top_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp">
+        <TextView
+            android:id="@+id/transaction_yearly_rpt_title_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="Relatório Anual:" />
+        <EditText
+            android:id="@+id/transaction_yearly_rpt_year_editText"
+            android:layout_width="60dp"
+            android:textSize="14sp"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="2018" />
+        <Button
+            android:id="@+id/transaction_yearly_rpt_search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buscar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/transaction_yearly_rpt_center_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_below="@id/transaction_yearly_rpt_top_linearlayout"
+        android:layout_above="@+id/transaction_yearly_rpt_bottom_linearlayout"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/transaction_yearly_rpt_monthly_resume_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:divider="#a1a0a0"
+            android:dividerHeight="2px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/transaction_yearly_rpt_bottom_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <TableLayout
+            android:id="@+id/main_table_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border_shadow"
+            android:elevation="2dp"
+            android:stretchColumns="*"
+            android:shrinkColumns="*">
+            <TableRow
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_column="1"
+                    android:gravity="right"
+                    android:text="Receita anual:" />
+                <TextView
+                    android:id="@+id/transaction_yearly_rpt_income_value_textview"
+                    android:layout_column="2"
+                    android:layout_marginRight="6dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/monthly_value_defaut" />
+            </TableRow>
+            <TableRow
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp">
+                <TextView
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Despesa anual:" />
+                <TextView
+                    android:id="@+id/transaction_yearly_rpt_expense_value_textview"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:layout_marginRight="6dp"
+                    android:gravity="right"
+                    android:text="@string/monthly_value_defaut" />
+            </TableRow>
+            <TableRow
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp">
+
+                <TextView
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Saldo anual:" />
+
+                <TextView
+                    android:id="@+id/transaction_yearly_rpt_balance_value_textview"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:layout_marginRight="6dp"
+                    android:gravity="right"
+                    android:textStyle="bold"
+                    android:text="@string/monthly_value_defaut" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+</RelativeLayout>

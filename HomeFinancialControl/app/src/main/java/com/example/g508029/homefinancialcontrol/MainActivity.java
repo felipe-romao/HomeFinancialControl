@@ -135,7 +135,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
         monthly_balance_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Test", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, TransactionYearlyReportActivity.class);
+                startActivity(intent);
             }
         });
 

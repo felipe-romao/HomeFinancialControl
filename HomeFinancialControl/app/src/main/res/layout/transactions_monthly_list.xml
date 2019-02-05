@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+    <TableRow
+        android:layout_width="wrap_content"
+        android:textAlignment="gravity">
+        <TextView
+            android:id="@+id/transactions_monthly_list_date_textview"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:text="Janeiro/2019"/>
+    </TableRow>
+    <TableRow
+        android:layout_width="wrap_content"
+        android:textAlignment="gravity">
+        <TextView
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:textSize="10sp"
+            android:textAlignment="gravity"
+            android:text="Receita"/>
+        <TextView
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:textSize="10sp"
+            android:textAlignment="gravity"
+            android:text="Despesa"/>
+        <TextView
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.34"
+            android:textSize="10sp"
+            android:textAlignment="gravity"
+            android:text="Saldo"/>
+    </TableRow>
+    <TableRow
+        android:layout_width="wrap_content"
+        android:textAlignment="gravity">
+        <TextView
+            android:id="@+id/transactions_monthly_list_income_value_textview"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:textSize="14sp"
+            android:textAlignment="gravity"
+            android:text="R$ 0,00"/>
+        <TextView
+            android:id="@+id/transactions_monthly_list_expense_value_textview"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:textSize="14sp"
+            android:textAlignment="gravity"
+            android:text="R$ 0,00"/>
+
+        <TextView
+            android:id="@+id/transactions_monthly_list_balance_value_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.34"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:text="R$ 0,00"
+            android:textSize="14sp"
+            android:textAlignment="gravity"
+            android:textStyle="bold" />
+    </TableRow>
+</TableLayout>

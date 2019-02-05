@@ -23,11 +23,13 @@ public class NumberTextWatcher implements TextWatcher {
     public NumberTextWatcher(EditText editText, FormatHelper formatHelper) {
         this.editTextWeakReference = new WeakReference<EditText>(editText);
         this.formatHelper = formatHelper;
+        editText.setSelection(editText.length());
     }
 
     public NumberTextWatcher(EditText editText) {
         this.editTextWeakReference = new WeakReference<EditText>(editText);
         this.formatHelper = new FormatHelper(Locale.getDefault());
+        editText.setSelection(editText.length());
     }
 
     @Override

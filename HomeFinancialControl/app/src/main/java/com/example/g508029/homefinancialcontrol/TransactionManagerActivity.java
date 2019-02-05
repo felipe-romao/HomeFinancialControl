@@ -9,14 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.example.g508029.homefinancialcontrol.DB.SQLiteTransactionRepository;
-import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
+import android.view.WindowManager;
 import com.example.g508029.homefinancialcontrol.adpter.FragmentPagerAdpter;
-import com.example.g508029.homefinancialcontrol.model.Transaction;
-
-import java.text.ParseException;
 
 import static com.example.g508029.homefinancialcontrol.Constants.EXPENSE_DESCRIPTION;
 import static com.example.g508029.homefinancialcontrol.Constants.INCOME_DESCRIPTION;
@@ -25,7 +19,6 @@ public class TransactionManagerActivity extends AppCompatActivity {
     private FragmentPagerAdpter adpter;
     private TabLayout tabLayout;
     private String transactionTypeSelected;
-    private TransactionRepository transactionRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +28,7 @@ public class TransactionManagerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         transactionTypeSelected = intent.getStringExtra("TRANSCATION_TYPE_SELECTED");
         this.createTabLayouts();
-        this.transactionRepository = new SQLiteTransactionRepository(this);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override

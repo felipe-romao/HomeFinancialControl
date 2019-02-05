@@ -122,6 +122,7 @@ public class TransactionFragment extends Fragment implements TransactionFragment
 
     @Override
     public void setTransactionValue(String value) {
+
         this.transactionValueEditText.setText(value);
     }
 
