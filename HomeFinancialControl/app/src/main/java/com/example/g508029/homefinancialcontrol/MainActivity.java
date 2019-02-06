@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -106,6 +108,29 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
     @Override
     public void setCategoryChart(HashMap<String, Double> values) {
         ChartHelper.setValues(this.categoryChart, values);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.main_menu_payment_mode_manager:
+                Intent paymentModeManagerIntent = new Intent(this, PaymentModeManagerActivity.class);
+                startActivity(paymentModeManagerIntent);
+                break;
+            case R.id.main_menu_yearly_report:
+                Intent transactionYearlyReportIntent = new Intent(this, TransactionYearlyReportActivity.class);
+                startActivity(transactionYearlyReportIntent);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void getItemsFromActivity(){
