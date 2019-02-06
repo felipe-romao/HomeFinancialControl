@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CategoryManagerActivity">
+
+    <TableLayout
+        android:id="@+id/category_manager_tablelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:padding="5dp">
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:paddingBottom="10dp"
+                android:text="Categorias:" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="Movimento: "
+                android:layout_width="0dp"
+                android:textSize="14sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                />
+            <Spinner
+                android:id="@+id/category_manager_transaction_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                />
+        </TableRow>
+        <TableRow>
+            <EditText
+                android:id="@+id/category_manager_description_editText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:hint="Descrição"/>
+            <Button
+                android:id="@+id/category_manager_add_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="Adicionar"/>
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:layout_below="@id/category_manager_tablelayout">
+        <ListView
+            android:id="@+id/category_manager_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#a1a0a0"
+            android:dividerHeight="2px" />
+    </LinearLayout>
+
+</RelativeLayout>

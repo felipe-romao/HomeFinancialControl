@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".TransactionManagerActivity" />
         <activity android:name=".TransactionYearlyReportActivity" />
-        <activity android:name=".PaymentModeManagerActivity"></activity>
+        <activity android:name=".PaymentModeManagerActivity" />
+        <activity android:name=".CategoryManagerActivity"></activity>
     </application>
 
 </manifest>
