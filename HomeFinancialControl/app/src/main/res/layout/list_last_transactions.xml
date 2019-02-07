@@ -1,52 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:columnCount="3">
+        android:paddingLeft="10dp">
 
-        <TextView
-            android:id="@+id/last_transaction_category_textview"
-            android:layout_column="0"
-            android:layout_columnWeight=".65"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_gravity="left"
-            android:text="ALIMENTACAO"
-            android:textSize="12sp" />
-        <TextView
-            android:id="@+id/last_transaction_value_textview"
-            android:layout_column="1"
-            android:layout_columnWeight=".25"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:text="R$ xxx,xx"
-            android:layout_gravity="right"
-            android:textSize="12sp" />
+        <TableRow
+            android:textAlignment="gravity">
+            <TextView
+                android:id="@+id/last_transaction_category_textview"
+                android:layout_weight=".6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="left"
+                android:layout_gravity="left"
+                android:text="ALIMENTACAO"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/last_transaction_value_textview"
+                android:layout_weight=".3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="R$ xxx,xx"
+                android:gravity="right"
+                android:layout_gravity="right"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/last_transaction_type_textview"
-            android:layout_column="2"
-            android:layout_columnWeight=".10"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:text="tipo"
-            android:layout_gravity="right"
-            android:textSize="14sp"
-            android:textStyle="bold"/>
-    </GridLayout>
+            <TextView
+                android:id="@+id/last_transaction_type_textview"
+                android:layout_weight=".1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="tipo"
+                android:gravity="right"
+                android:layout_gravity="right"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+        </TableRow>
+    </TableLayout>
 </LinearLayout>
