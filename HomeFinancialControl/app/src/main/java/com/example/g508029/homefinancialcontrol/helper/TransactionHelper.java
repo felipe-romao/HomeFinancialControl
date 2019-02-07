@@ -14,6 +14,13 @@ import static com.example.g508029.homefinancialcontrol.Constants.INCOME_DESCRIPT
 import static com.example.g508029.homefinancialcontrol.Constants.MMMMyyyy_DATE_FORMAT_PATTERN;
 
 public final class TransactionHelper {
+    public static List<String> getTransactionTypes(){
+        List<String> transactionTypes = new ArrayList<>();
+        transactionTypes.add(INCOME_DESCRIPTION);
+        transactionTypes.add(EXPENSE_DESCRIPTION);
+        return transactionTypes;
+    }
+
     public static List<String> getTransactionCategory(String transactionType){
         ArrayList<String> categories = new ArrayList<>();
 
