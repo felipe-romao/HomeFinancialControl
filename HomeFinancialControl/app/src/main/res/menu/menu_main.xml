@@ -5,6 +5,9 @@
         android:id="@+id/main_menu_payment_mode_manager"
         android:title="Gerenciar modo de pagamento" />
     <item
+        android:id="@+id/main_menu_category_manager"
+        android:title="Gerenciar categorias" />
+    <item
         android:id="@+id/main_menu_yearly_report"
         android:title="Relatório anual" />
 </menu>

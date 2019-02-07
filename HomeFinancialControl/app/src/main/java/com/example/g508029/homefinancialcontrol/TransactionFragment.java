@@ -11,6 +11,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.g508029.homefinancialcontrol.DB.DBHelper;
+import com.example.g508029.homefinancialcontrol.DB.ICategoryRepository;
+import com.example.g508029.homefinancialcontrol.DB.IPaymentModeRepository;
+import com.example.g508029.homefinancialcontrol.DB.SQLiteCategoryRepository;
+import com.example.g508029.homefinancialcontrol.DB.SQLitePaymentModeRepository;
 import com.example.g508029.homefinancialcontrol.DB.SQLiteTransactionRepository;
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
@@ -45,6 +49,8 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     private TransactionFragmentPresenter presenter;
     private ArrayAdapter<String> categoriesAdapter;
     private ArrayAdapter<String> kindsAdapter;
+    private ICategoryRepository categoryRepository;
+    private IPaymentModeRepository paymentModeRepository;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -164,9 +170,12 @@ public class TransactionFragment extends Fragment implements TransactionFragment
 
     private void initialize(){
         Locale mLocale      = new Locale("pt", "BR");
+        DBHelper dbHelper   = new DBHelper(getContext());
         this.formatHelper   = new FormatHelper(mLocale);
-        this.repository     = new SQLiteTransactionRepository(getContext(), new DBHelper(getContext()));
-        this.presenter      = new TransactionFragmentPresenter(this, this.repository, this.formatHelper);
+        this.repository     = new SQLiteTransactionRepository(getContext(), dbHelper);
+        this.categoryRepository    = new SQLiteCategoryRepository(getContext(), dbHelper);
+        this.paymentModeRepository = new SQLitePaymentModeRepository(getContext(), dbHelper);
+        this.presenter      = new TransactionFragmentPresenter(this, this.repository, this.categoryRepository, this.paymentModeRepository, this.formatHelper);
     }
 
     private void initializeListeners(){

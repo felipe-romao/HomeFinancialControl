@@ -5,7 +5,9 @@
 
     <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:columnCount="3">
 
         <TextView
@@ -19,7 +21,7 @@
             android:layout_marginRight="5dp"
             android:layout_gravity="left"
             android:text="ALIMENTACAO"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
         <TextView
             android:id="@+id/last_transaction_value_textview"
             android:layout_column="1"
@@ -31,7 +33,7 @@
             android:layout_marginRight="5dp"
             android:text="R$ xxx,xx"
             android:layout_gravity="right"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/last_transaction_type_textview"
@@ -44,7 +46,7 @@
             android:layout_marginRight="5dp"
             android:text="tipo"
             android:layout_gravity="right"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="bold"/>
     </GridLayout>
 </LinearLayout>

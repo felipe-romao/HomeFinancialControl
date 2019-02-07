@@ -128,8 +128,11 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
                 Intent transactionYearlyReportIntent = new Intent(this, TransactionYearlyReportActivity.class);
                 startActivity(transactionYearlyReportIntent);
                 break;
+            case R.id.main_menu_category_manager:
+                Intent categoryManagerIntent = new Intent(this, CategoryManagerActivity.class);
+                startActivity(categoryManagerIntent);
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

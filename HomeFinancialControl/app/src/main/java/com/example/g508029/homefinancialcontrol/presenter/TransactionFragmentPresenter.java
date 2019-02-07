@@ -2,6 +2,8 @@ package com.example.g508029.homefinancialcontrol.presenter;
 
 import android.util.Log;
 
+import com.example.g508029.homefinancialcontrol.DB.ICategoryRepository;
+import com.example.g508029.homefinancialcontrol.DB.IPaymentModeRepository;
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 import com.example.g508029.homefinancialcontrol.helper.TransactionHelper;
@@ -35,18 +37,22 @@ public class TransactionFragmentPresenter {
 
     private ITransactionFragmentView view;
     private TransactionRepository repository;
+    private ICategoryRepository categoryRepository;
+    private IPaymentModeRepository paymentModeRepository;
     private FormatHelper formatHelper;
 
-    public TransactionFragmentPresenter(ITransactionFragmentView view, TransactionRepository repository, FormatHelper formatHelper){
+    public TransactionFragmentPresenter(ITransactionFragmentView view, TransactionRepository repository, ICategoryRepository categoryRepository, IPaymentModeRepository paymentModeRepository, FormatHelper formatHelper){
         this.view = view;
         this.repository = repository;
+        this.categoryRepository = categoryRepository;
+        this.paymentModeRepository = paymentModeRepository;
         this.formatHelper = formatHelper;
     }
 
     public void initialize(){
         try {
-            List<String> transactionCategories = TransactionHelper.getTransactionCategory(this.view.getTransactionType());
-            List<String> transactionPaymentModes = TransactionHelper.getTransactionKind(this.view.getTransactionType());
+            List<String> transactionCategories = TransactionHelper.getTransactionCategory(this.view.getTransactionType(), this.categoryRepository);
+            List<String> transactionPaymentModes = TransactionHelper.getTransactionKind(this.paymentModeRepository);
             this.view.setCategories(transactionCategories);
             this.view.setPaymentModes(transactionPaymentModes);
             initializeValues();

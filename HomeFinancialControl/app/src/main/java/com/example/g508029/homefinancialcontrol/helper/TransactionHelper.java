@@ -1,6 +1,10 @@
 package com.example.g508029.homefinancialcontrol.helper;
 
 import com.example.g508029.homefinancialcontrol.Constants;
+import com.example.g508029.homefinancialcontrol.DB.ICategoryRepository;
+import com.example.g508029.homefinancialcontrol.DB.IPaymentModeRepository;
+import com.example.g508029.homefinancialcontrol.model.Category;
+import com.example.g508029.homefinancialcontrol.model.PaymentMode;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.model.TransactionsMonthly;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
@@ -21,39 +25,20 @@ public final class TransactionHelper {
         return transactionTypes;
     }
 
-    public static List<String> getTransactionCategory(String transactionType){
+    public static List<String> getTransactionCategory(String transactionType, ICategoryRepository repository){
         ArrayList<String> categories = new ArrayList<>();
-
-        switch (transactionType) {
-            case INCOME_DESCRIPTION :
-                categories.add("Emprestimo");
-                categories.add("Salário");
-                categories.add("Vendas");
-                break;
-            case EXPENSE_DESCRIPTION:
-                categories.add("Alimentação");
-                categories.add("Educação");
-                categories.add("Combustível");
-                categories.add("Diversão");
-                break;
+        for (Category category: repository.getAll()){
+            if(category.getTypeMovement().equals(transactionType)){
+                categories.add(category.getDescription());
+            }
         }
         return categories;
     }
 
-    public static List<String> getTransactionKind(String transactionType){
+    public static List<String> getTransactionKind(IPaymentModeRepository repository){
         ArrayList<String> kinds = new ArrayList<>();
-
-        switch (transactionType) {
-            case "RECEITA" :
-                kinds.add("Cartão");
-                kinds.add("Dinheiro");
-                kinds.add("Poupança");
-                break;
-            case "DESPESA":
-                kinds.add("Cartão");
-                kinds.add("Dinheiro");
-                kinds.add("Poupança");
-                break;
+        for (PaymentMode paymentMode: repository.getAll()){
+            kinds.add(paymentMode.getMode());
         }
         return kinds;
     }

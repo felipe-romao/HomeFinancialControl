@@ -1,11 +1,15 @@
 package com.example.g508029.homefinancialcontrol.presenter;
 
+import android.util.Log;
+
 import com.example.g508029.homefinancialcontrol.DB.ICategoryRepository;
 import com.example.g508029.homefinancialcontrol.helper.TransactionHelper;
 import com.example.g508029.homefinancialcontrol.model.Category;
 
 import java.util.List;
 import java.util.UUID;
+
+import static android.content.ContentValues.TAG;
 
 public class CategoryManagerPresenter {
     public interface ICategoryManagerView{
@@ -43,10 +47,14 @@ public class CategoryManagerPresenter {
             String description = this.view.getDescription();
             String transactionType = this.view.getTransactionTypeSelected();
 
+            Log.d(TAG, "onAddedCategory: id " + id);
+            Log.d(TAG, "onAddedCategory: desc " + description);
+            Log.d(TAG, "onAddedCategory: type " + transactionType);
             Category category = new Category(id, description, transactionType);
             this.repository.addCategory(category);
 
             this.view.clearValues();
+            this.view.showMessage("Categoria adicionada com sucesso!");
 
         } catch (Exception ex){
             this.view.showMessage("Ocorreu um erro ao tentar adicionar: " + ex.getMessage());
@@ -78,7 +86,7 @@ public class CategoryManagerPresenter {
         if (this.view.getDescription() == null || this.view.getDescription().isEmpty()){
             throw new RuntimeException("Informe uma descrição");
         }
-        if (this.view.getCategorySelected() == null ){
+        if (this.view.getTransactionTypeSelected() == null ){
             throw new RuntimeException("Informe um tipo de movimento");
         }
     }
