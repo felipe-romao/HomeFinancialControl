@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 
@@ -65,10 +66,17 @@ public class TimePickerFragment{
 
     private TimePickerDialog.OnTimeSetListener timeSetListener =
             new TimePickerDialog.OnTimeSetListener() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
+
+                //@RequiresApi(api = Build.VERSION_CODES.M)
                 public void onTimeSet(TimePicker view, int hour, int minute) {
-                    setHour(view.getHour());
-                    setMinute(view.getMinute());
+                    int currentApiVersion = Build.VERSION.SDK_INT;
+                    if(currentApiVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
+                        setHour(view.getHour());
+                        setMinute(view.getMinute());
+                    }else {
+                        setHour(view.getCurrentHour());
+                        setMinute(view.getCurrentMinute());
+                    }
                     editText.setText(getTimeFormatted());
                 }
             };
