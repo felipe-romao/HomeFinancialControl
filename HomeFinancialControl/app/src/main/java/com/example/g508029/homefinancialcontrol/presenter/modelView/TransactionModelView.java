@@ -1,12 +1,30 @@
 package com.example.g508029.homefinancialcontrol.presenter.modelView;
 
 public class TransactionModelView {
+    private String id;
+    private String paymentMode;
     private String date;
     private String description;
     private String category;
     private String value;
     private String type;
     private String typeSymbol;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+    }
 
     public String getDate() {
         return date;

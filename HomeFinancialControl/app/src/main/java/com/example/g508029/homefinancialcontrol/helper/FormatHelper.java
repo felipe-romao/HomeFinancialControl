@@ -49,7 +49,11 @@ public class FormatHelper {
         return Arrays.asList(new DateFormatSymbols(this.locale).getMonths());
     }
 
+    public int getMonthNumberByName(String monthName){
+        return Arrays.asList(new DateFormatSymbols(this.locale).getMonths()).indexOf(monthName) + 1;
+    }
+
     public String getMonthNameCurrent(){
-        return this.getMonthNames().get(Calendar.getInstance(this.locale).MONTH);
+        return this.getMonthNames().get(Calendar.getInstance(this.locale).MONTH - 1);
     }
 }

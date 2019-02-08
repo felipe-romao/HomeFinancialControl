@@ -168,6 +168,15 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
             }
         });
 
+        lastTranscationLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TransactionsReportActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         transactionNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
