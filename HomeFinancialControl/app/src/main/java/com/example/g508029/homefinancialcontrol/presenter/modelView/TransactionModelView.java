@@ -1,10 +1,28 @@
 package com.example.g508029.homefinancialcontrol.presenter.modelView;
 
 public class TransactionModelView {
+    private String date;
+    private String description;
     private String category;
     private String value;
     private String type;
     private String typeSymbol;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getTypeSymbol() {
         return typeSymbol;
