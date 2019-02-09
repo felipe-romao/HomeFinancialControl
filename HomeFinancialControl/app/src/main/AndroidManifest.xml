@@ -20,7 +20,8 @@
         <activity android:name=".TransactionYearlyReportActivity" />
         <activity android:name=".PaymentModeManagerActivity" />
         <activity android:name=".CategoryManagerActivity" />
-        <activity android:name=".TransactionsReportActivity"></activity>
+        <activity android:name=".TransactionsReportActivity" />
+        <activity android:name=".CategoryReportActivity"></activity>
     </application>
 
 </manifest>

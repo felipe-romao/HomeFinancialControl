@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CategoryReportActivity">
+
+    <TableLayout
+        android:id="@+id/category_report_tablelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:padding="5dp">
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:paddingBottom="10dp"
+                android:text="Relatório por categoria:" />
+        </TableRow>
+        <TableRow>
+            <Spinner
+                android:id="@+id/category_report_month_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.65"
+                android:layout_gravity="center|left" />
+            <EditText
+                android:id="@+id/category_report_year_editText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.35"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:text="2019"/>
+        </TableRow>
+        <TableRow>
+            <Spinner
+                android:id="@+id/category_report_movement_type_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.65"
+                android:layout_gravity="center|left" />
+            <Button
+                android:id="@+id/category_report_search_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.35"
+                android:text="Buscar"/>
+        </TableRow>
+    </TableLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:layout_below="@id/category_report_tablelayout">
+        <ListView
+            android:id="@+id/category_report_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#a1a0a0"
+            android:dividerHeight="2px" />
+    </LinearLayout>
+
+</RelativeLayout>
