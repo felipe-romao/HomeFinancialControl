@@ -17,6 +17,7 @@ import com.example.g508029.homefinancialcontrol.DB.SQLiteTransactionRepository;
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
 import com.example.g508029.homefinancialcontrol.helper.ChartHelper;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
+import com.example.g508029.homefinancialcontrol.model.CategoryGrouped;
 import com.example.g508029.homefinancialcontrol.presenter.MainPresenter;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
 import com.github.mikephil.charting.charts.PieChart;
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
     private Button expenseButton;
     private Button incomeButton;
     private Button transactionNewButton;
-    private LinearLayout monthly_balance_layout;
+    private LinearLayout monthlyBalanceLayout;
+    private LinearLayout categoryLinearLayout;
     private LinearLayout lastTranscationLayout;
 
     private FormatHelper formatHelper;
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
     }
 
     @Override
-    public void setCategoryChart(HashMap<String, Double> values) {
+    public void setCategoryChart(List<CategoryGrouped> values) {
         ChartHelper.setValues(this.categoryChart, values);
     }
 
@@ -147,7 +149,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
         this.expenseButton                  = findViewById(R.id.main_expense_button);
         this.incomeButton                   = findViewById(R.id.main_income_button);
         this.transactionNewButton           = findViewById(R.id.main_new_movement_button);
-        this.monthly_balance_layout         = findViewById(R.id.main_monthly_balance_linear_layout);
+        this.monthlyBalanceLayout           = findViewById(R.id.main_monthly_balance_linear_layout);
+        this.categoryLinearLayout           = findViewById(R.id.main_summary_category_linear_layout);
         this.lastTranscationLayout          = findViewById(R.id.main_last_movements_views);
     }
 
@@ -160,10 +163,18 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
     }
 
     private void initializeItemsEvent(){
-        monthly_balance_layout.setOnClickListener(new View.OnClickListener() {
+        monthlyBalanceLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TransactionYearlyReportActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        categoryLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CategoryReportActivity.class);
                 startActivity(intent);
             }
         });

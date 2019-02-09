@@ -61,6 +61,20 @@ public class SQLiteTransactionRepository implements TransactionRepository{
     }
 
     @Override
+    public List<Transaction> getAllTransactionsByMonthAndType(int month, int year, String type) {
+        String monthFormatted = String.format("%02d", month);
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " +
+                "strftime('%m', date / 1000, 'unixepoch') = ? " +
+                "and " +
+                "strftime('%Y', date / 1000, 'unixepoch') = ? " +
+                "and type = ? order by date ASC;";
+        String[] args = new String[]{monthFormatted, String.valueOf(year), type};
+        Cursor cursor = db.rawQuery(sql, args);
+        return populateTransactions(cursor);
+    }
+
+    @Override
     public void deleteTransaction(String id) {
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
         db.delete(TABLE_NAME, "id=?", new String[]{id});

@@ -33,4 +33,6 @@ public class TransactionsBuilder {
         }
         return new TransactionsYearly(year, transactionsMonthlies);
     }
+
+
 }

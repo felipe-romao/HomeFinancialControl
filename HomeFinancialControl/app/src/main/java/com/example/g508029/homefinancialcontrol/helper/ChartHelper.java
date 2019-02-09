@@ -1,7 +1,9 @@
 package com.example.g508029.homefinancialcontrol.helper;
 
 import android.graphics.Color;
+import android.util.Log;
 
+import com.example.g508029.homefinancialcontrol.model.CategoryGrouped;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -13,15 +15,18 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static android.content.ContentValues.TAG;
+
 public class ChartHelper {
-    public static void setValues(PieChart pieChart, HashMap<String, Double> categoriesValues){
+    public static void setValues(PieChart pieChart, List<CategoryGrouped> categoryGroupeds){
         ArrayList<PieEntry> chartValues = new ArrayList<PieEntry>();
 
         int chartPosition = 0;
-        for(Map.Entry<String, Double> map: categoriesValues.entrySet()){
-            chartValues.add(new PieEntry(map.getValue().floatValue(),map.getKey(), chartPosition));
+        for(CategoryGrouped categoryGrouped: categoryGroupeds){
+            chartValues.add(new PieEntry(categoryGrouped.getValue().floatValue(),categoryGrouped.getDescription(), chartPosition));
             chartPosition++;
         }
         PieDataSet dataSet = new PieDataSet(chartValues ,"Categorias");
