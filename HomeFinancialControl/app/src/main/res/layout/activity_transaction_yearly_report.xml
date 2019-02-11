@@ -27,7 +27,7 @@
             android:textSize="14sp"
             android:textAlignment="center"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="number|textImeMultiLine"
             android:text="2018" />
         <Button
             android:id="@+id/transaction_yearly_rpt_search_button"

@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.15"
                 android:textSize="13sp"
+                android:inputType="textImeMultiLine"
                 android:text="2019"/>
             <Button
                 android:id="@+id/transaction_report_search_button"

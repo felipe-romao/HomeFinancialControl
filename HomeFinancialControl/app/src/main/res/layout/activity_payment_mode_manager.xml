@@ -29,6 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
+                android:inputType="textImeMultiLine"
                 android:hint="Descrição"/>
             <Button
                 android:id="@+id/payment_mode_add_button"
