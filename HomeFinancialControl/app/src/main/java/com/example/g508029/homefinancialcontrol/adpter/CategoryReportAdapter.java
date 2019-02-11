@@ -45,7 +45,15 @@ public class CategoryReportAdapter extends BaseAdapter{
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.category_totalizer_list, null, false);
         }
+        populateFields(view, modelView);
+        return view;
+    }
 
+    public CategoryGroupedModelView createHeaderData(){
+        return new CategoryGroupedModelView("Qtde", "Descrição", "Total");
+    }
+
+    public void populateFields(View view, CategoryGroupedModelView modelView){
         TextView countTextView = view.findViewById(R.id.category_totalize_count_textView);
         TextView descriptionTextView = view.findViewById(R.id.category_totalize_description_textView);
         TextView valueTextView = view.findViewById(R.id.category_totalize_value_textView);
@@ -53,7 +61,5 @@ public class CategoryReportAdapter extends BaseAdapter{
         countTextView.setText(modelView.getCount());
         descriptionTextView.setText(modelView.getDescription());
         valueTextView.setText(modelView.getValue());
-
-        return view;
     }
 }

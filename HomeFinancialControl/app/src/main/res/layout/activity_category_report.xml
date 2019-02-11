@@ -37,6 +37,7 @@
                 android:layout_weight="0.35"
                 android:textSize="13sp"
                 android:gravity="center"
+                android:inputType="textImeMultiLine"
                 android:text="2019"/>
         </TableRow>
         <TableRow>

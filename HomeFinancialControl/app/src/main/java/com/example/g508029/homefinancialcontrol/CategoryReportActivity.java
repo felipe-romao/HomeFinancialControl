@@ -3,6 +3,7 @@ package com.example.g508029.homefinancialcontrol;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.g508029.homefinancialcontrol.DB.SQLiteTransactionRepository;
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
+import com.example.g508029.homefinancialcontrol.adpter.CategoryReportAdapter;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 import com.example.g508029.homefinancialcontrol.presenter.CategoryReportPresenter;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.CategoryGroupedModelView;
@@ -31,6 +33,8 @@ public class CategoryReportActivity extends AppCompatActivity implements Categor
     private CategoryReportPresenter presenter;
     private ArrayAdapter<String> monthAdpter;
     private ArrayAdapter<String> transactionTypesAdpter;
+    private CategoryReportAdapter categoryReportAdapter;
+    private boolean hasHeaderCategoriesListView = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,31 +43,7 @@ public class CategoryReportActivity extends AppCompatActivity implements Categor
         this.getItemsFromActivity();
         this.initialize();
         this.initializeListernsEvent();
-    }
-
-    private void initializeListernsEvent() {
-        this.searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onGetAllCategoriesTotalizers();
-            }
-        });
-    }
-
-    private void initialize() {
-        Locale mLocale = new Locale("pt", "BR");
-        this.formatHelper = new FormatHelper(mLocale);
-        this.repository  = new SQLiteTransactionRepository(this);
-        this.presenter = new CategoryReportPresenter(this, this.repository, this.formatHelper);
-        this.presenter.initialize();
-    }
-
-    private void getItemsFromActivity() {
-        this.monthsSpinner = findViewById(R.id.category_report_month_spinner);
-        this.movementTypesSpinner = findViewById(R.id.category_report_movement_type_spinner);
-        this.searchButton = findViewById(R.id.category_report_search_button);
-        this.yearEditText = findViewById(R.id.category_report_year_editText);
-        this.categoriesListView = findViewById(R.id.category_report_listview);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override
@@ -110,7 +90,13 @@ public class CategoryReportActivity extends AppCompatActivity implements Categor
 
     @Override
     public void setCategoryModelViews(List<CategoryGroupedModelView> categoryGroupedModelViews) {
+        this.categoryReportAdapter = new CategoryReportAdapter(this, categoryGroupedModelViews);
+        this.categoriesListView.setAdapter(this.categoryReportAdapter);
 
+        if(hasHeaderCategoriesListView){
+            this.categoriesListView.addHeaderView(this.createHeaderView());
+            hasHeaderCategoriesListView = true;
+        }
     }
 
     @Override
@@ -118,10 +104,41 @@ public class CategoryReportActivity extends AppCompatActivity implements Categor
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    public ArrayAdapter<String> getArrayAdpter(List<String> values){
+    private View createHeaderView(){
+        View headerView = getLayoutInflater().inflate(R.layout.category_totalizer_list, null);
+        this.categoryReportAdapter.populateFields(headerView, this.categoryReportAdapter.createHeaderData());
+        return headerView;
+    }
+
+    private ArrayAdapter<String> getArrayAdpter(List<String> values){
         ArrayAdapter<String> adapter;
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, values);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         return adapter;
+    }
+
+    private void initializeListernsEvent() {
+        this.searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onGetAllCategoriesTotalizers();
+            }
+        });
+    }
+
+    private void initialize() {
+        Locale mLocale = new Locale("pt", "BR");
+        this.formatHelper = new FormatHelper(mLocale);
+        this.repository  = new SQLiteTransactionRepository(this);
+        this.presenter = new CategoryReportPresenter(this, this.repository, this.formatHelper);
+        this.presenter.initialize();
+    }
+
+    private void getItemsFromActivity() {
+        this.monthsSpinner = findViewById(R.id.category_report_month_spinner);
+        this.movementTypesSpinner = findViewById(R.id.category_report_movement_type_spinner);
+        this.searchButton = findViewById(R.id.category_report_search_button);
+        this.yearEditText = findViewById(R.id.category_report_year_editText);
+        this.categoriesListView = findViewById(R.id.category_report_listview);
     }
 }

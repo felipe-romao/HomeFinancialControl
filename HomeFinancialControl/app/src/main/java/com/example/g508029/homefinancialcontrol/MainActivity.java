@@ -134,6 +134,14 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
                 Intent categoryManagerIntent = new Intent(this, CategoryManagerActivity.class);
                 startActivity(categoryManagerIntent);
                 break;
+            case R.id.main_menu_category_report:
+                Intent categoryReportIntent = new Intent(this, CategoryReportActivity.class);
+                startActivity(categoryReportIntent);
+                break;
+            case R.id.main_menu_transactions_report:
+                Intent transactionsReportIntent = new Intent(this, TransactionsReportActivity.class);
+                startActivity(transactionsReportIntent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -172,6 +180,14 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
         });
 
         categoryLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CategoryReportActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        categoryChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CategoryReportActivity.class);

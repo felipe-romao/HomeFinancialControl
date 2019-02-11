@@ -52,6 +52,8 @@ public class CategoryReportPresenter {
             this.view.setTransactionTypes(TransactionHelper.getTransactionTypes());
             this.view.setTransactionType(EXPENSE_DESCRIPTION);
 
+            this.onGetAllCategoriesTotalizers();
+
         } catch (Exception ex){
             this.view.showMessage("Ocorreu um erro ao tentar inicializar: " + ex.getMessage());
         }

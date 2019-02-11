@@ -10,4 +10,10 @@
     <item
         android:id="@+id/main_menu_yearly_report"
         android:title="Relatório anual" />
+    <item
+        android:id="@+id/main_menu_category_report"
+        android:title="Relatório por categoria" />
+    <item
+        android:id="@+id/main_menu_transactions_report"
+        android:title="Relatório das transações" />
 </menu>
