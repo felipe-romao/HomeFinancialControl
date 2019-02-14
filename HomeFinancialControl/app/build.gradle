@@ -39,4 +39,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     testImplementation 'org.json:json:20140107'
+    implementation 'org.apache.poi:poi:3.7'
 }
