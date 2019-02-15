@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.model.TransactionsMonthly;
+import com.example.g508029.homefinancialcontrol.model.TransactionsYearly;
 import com.example.g508029.homefinancialcontrol.system.IFileSystem;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -17,6 +18,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +36,7 @@ public class FileExternalService implements IExternalService {
     }
 
     @Override
-    public void exportTransactionsMonthly(String path, TransactionsMonthly transactionsMonthly) {
+    public void exportTransactionsMonthly(String path, TransactionsYearly transactionsYearly) {
 
         try {
             Workbook wb = new HSSFWorkbook();
@@ -43,7 +45,7 @@ public class FileExternalService implements IExternalService {
             //Cell style for header row
             CellStyle cs = wb.createCellStyle();
             cs.setFillForegroundColor(HSSFColor.AUTOMATIC.index);
-            cs.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+            cs.setFillPattern(HSSFCellStyle.ALIGN_CENTER);
 
             //New Sheet
             Sheet sheet1 = null;
@@ -64,27 +66,31 @@ public class FileExternalService implements IExternalService {
                 c.setCellStyle(cs);
             }
             int pos = 1;
-            for (Transaction transaction: transactionsMonthly.getTransactions()){
-                Row row2 = sheet1.createRow(pos);
-                c = row2.createCell(0);
-                c.setCellValue(formatHelper.fromDateToString(MMddyyyyKma_DATE_FORMAT_PATTERN,transaction.getDate()));
 
-                c = row2.createCell(1);
-                c.setCellValue(transaction.getType());
+            for(TransactionsMonthly transactionsMonthly: transactionsYearly.getTransactionsMonthlies()){
 
-                c = row2.createCell(2);
-                c.setCellValue(transaction.getCategory());
+                for (Transaction transaction: transactionsMonthly.getTransactions()){
+                    Row row2 = sheet1.createRow(pos);
+                    c = row2.createCell(0);
+                    c.setCellValue(formatHelper.fromDateToString(MMddyyyyKma_DATE_FORMAT_PATTERN,transaction.getDate()));
 
-                c = row2.createCell(3);
-                c.setCellValue(transaction.getPaymentMode());
+                    c = row2.createCell(1);
+                    c.setCellValue(transaction.getType());
 
-                c = row2.createCell(4);
-                c.setCellValue(formatHelper.fromDoubleToCurrencyString(transaction.getValue()));
+                    c = row2.createCell(2);
+                    c.setCellValue(transaction.getCategory());
 
-                c = row2.createCell(5);
-                c.setCellValue(transaction.getDescription());
+                    c = row2.createCell(3);
+                    c.setCellValue(transaction.getPaymentMode());
 
-                pos++;
+                    c = row2.createCell(4);
+                    c.setCellValue(formatHelper.fromDoubleToCurrencyString(transaction.getValue()));
+
+                    c = row2.createCell(5);
+                    c.setCellValue(transaction.getDescription());
+
+                    pos++;
+                }
             }
 
             OutputStream stream = fileSystem.create(path);

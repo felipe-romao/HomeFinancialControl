@@ -16,4 +16,9 @@
     <item
         android:id="@+id/main_menu_transactions_report"
         android:title="Relatório das transações" />
+
+    <item
+        android:id="@+id/main_menu_export_transactions_report"
+        android:title="Exportar transações" />
+
 </menu>

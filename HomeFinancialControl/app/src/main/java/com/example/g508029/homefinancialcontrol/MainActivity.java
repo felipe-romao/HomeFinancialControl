@@ -1,8 +1,10 @@
 package com.example.g508029.homefinancialcontrol;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +22,9 @@ import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 import com.example.g508029.homefinancialcontrol.model.CategoryGrouped;
 import com.example.g508029.homefinancialcontrol.presenter.MainPresenter;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
+import com.example.g508029.homefinancialcontrol.service.FileExternalService;
+import com.example.g508029.homefinancialcontrol.service.IExternalService;
+import com.example.g508029.homefinancialcontrol.system.FileSystem;
 import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.HashMap;
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
     private FormatHelper formatHelper;
     private TransactionRepository transactionRepository;
     private MainPresenter presenter;
+    private IExternalService externalService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +148,11 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
                 Intent transactionsReportIntent = new Intent(this, TransactionsReportActivity.class);
                 startActivity(transactionsReportIntent);
                 break;
+            case R.id.main_menu_export_transactions_report:
+                String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+                Toast.makeText(this, path, Toast.LENGTH_LONG).show();
+                this.presenter.onDownloaderTransactionExternalFile(path);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -166,7 +177,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
         Locale mLocale = new Locale("pt", "BR");
         this.formatHelper = new FormatHelper(mLocale);
         this.transactionRepository  = new SQLiteTransactionRepository(this);
-        this.presenter = new MainPresenter(this, this.transactionRepository, this.formatHelper);
+        this.externalService = new FileExternalService(new FileSystem(), this.formatHelper);
+        this.presenter = new MainPresenter(this, this.transactionRepository, this.formatHelper, this.externalService);
         this.presenter.initialize();
     }
 

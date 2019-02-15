@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ExportTransactionsActivity">
+
+    <TableLayout
+        android:id="@+id/category_report_tablelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:padding="5dp">
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:paddingBottom="10dp"
+                android:text="Exportar transações:" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:textSize="13sp"
+                android:gravity="center|left"
+                android:text="Ano: "
+                />
+            <EditText
+                android:id="@+id/export_transactions_year_editText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:inputType="textImeMultiLine"
+                android:text="2019"/>
+            <Button
+                android:id="@+id/export_transactions_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="Exportar"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/export_transactions_result_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:paddingBottom="10dp"
+                android:text="Resultado..." />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

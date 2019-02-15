@@ -11,6 +11,8 @@ import com.example.g508029.homefinancialcontrol.model.CategoryGrouped;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.model.TransactionsMonthly;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
+import com.example.g508029.homefinancialcontrol.service.IExternalService;
+import com.example.g508029.homefinancialcontrol.system.IFileSystem;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -38,11 +40,13 @@ public class MainPresenter {
     private IMainView view;
     private TransactionRepository repository;
     private FormatHelper formatHelper;
+    private IExternalService externalService;
 
-    public MainPresenter(IMainView view, TransactionRepository repository, FormatHelper formatHelper) {
+    public MainPresenter(IMainView view, TransactionRepository repository, FormatHelper formatHelper, IExternalService externalService) {
         this.view = view;
         this.repository = repository;
         this.formatHelper = formatHelper;
+        this.externalService = externalService;
     }
 
     public void initialize(){
@@ -54,8 +58,6 @@ public class MainPresenter {
         TransactionsBuilder transactionsBuilder = new TransactionsBuilder(repository);
         TransactionsMonthly transactionsMonthlyCurrent = transactionsBuilder.buildTransactionsMonthly(monthCurrent, yearCurrent);
         List<Transaction> expenseTransactions = this.repository.getAllTransactionsByMonthAndType(monthCurrent, yearCurrent, EXPENSE_DESCRIPTION);
-        Log.d(TAG, "initialize: expense transactions size: " + expenseTransactions.size());
-
 
         String periodText = this.formatHelper.fromDateToString(MMMMyyyy_DATE_FORMAT_PATTERN, dateCurrent);
         String monthlyIncomeValue = this.formatHelper.fromDoubleToCurrencyString(transactionsMonthlyCurrent.getMonthlyIncome());
@@ -65,7 +67,6 @@ public class MainPresenter {
         List<Transaction> lastTransactions = this.repository.getLastTransactions(LAST_TRANSACTIONS_COUNTER);
 
         List<CategoryGrouped> generate = categoryGroupedListGenerator.generate();
-        Log.d(TAG, "initialize: category grouped size: " + generate.size());
         this.view.setMonthlyBalanceDate(periodText);
         this.view.setSummaryCategory(periodText);
         this.view.setMonthlyIncomeValue(monthlyIncomeValue);
@@ -73,5 +74,11 @@ public class MainPresenter {
         this.view.setMonthlyBalanceValue(monthlyBalanceValue);
         this.view.setCategoryChart(generate);
         this.view.setLastTransactions(TransactionHelper.toTransactionsModelViewList(lastTransactions, this.formatHelper));
+    }
+
+    public void onDownloaderTransactionExternalFile(String path){
+        TransactionsBuilder transactionsBuilder = new TransactionsBuilder(repository);
+        TransactionsMonthly transactionsMonthly = transactionsBuilder.buildTransactionsMonthly(02, 2019);
+        //this.externalService.exportTransactionsMonthly(path + "/transacoes.xls", transactionsMonthly);
     }
 }

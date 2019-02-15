@@ -6,6 +6,7 @@ import com.example.g508029.homefinancialcontrol.DataTestHelper;
 import com.example.g508029.homefinancialcontrol.System.MemoryStream;
 import com.example.g508029.homefinancialcontrol.TransactionsBuilder;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
+import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.model.TransactionsMonthly;
 import com.example.g508029.homefinancialcontrol.service.FileExternalService;
 import com.example.g508029.homefinancialcontrol.service.IExternalService;
@@ -18,6 +19,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 @LargeTest
@@ -35,10 +37,11 @@ public class FileExternalServiceTest {
     }
 
     @Test
-    public void initialTest(){
+    public void validateFileExported_createFileToExport_resultIsSuccess(){
         TransactionsMonthly transactionsMonthly = new TransactionsMonthly(02, 2019, DataTestHelper.createTransactionList());
+        List<Transaction> transactionsYearly = DataTestHelper.createTransactionsYearly();
 
-        this.service.exportTransactionsMonthly("C:\\data\\system\\teste.xls", transactionsMonthly);
+        this.service.exportTransactionsMonthly("C:\\data\\system\\teste.xls", null);
 
         Assert.assertEquals(externalFileGenerated(), Arrays.toString(this.fileSystem.getByteArray()));
     }
