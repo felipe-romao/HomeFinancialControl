@@ -149,9 +149,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
                 startActivity(transactionsReportIntent);
                 break;
             case R.id.main_menu_export_transactions_report:
-                String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
-                Toast.makeText(this, path, Toast.LENGTH_LONG).show();
-                this.presenter.onDownloaderTransactionExternalFile(path);
+                Intent exportTransactionsIntent = new Intent(this, ExportTransactionsActivity.class);
+                startActivity(exportTransactionsIntent);
                 break;
         }
         return super.onOptionsItemSelected(item);

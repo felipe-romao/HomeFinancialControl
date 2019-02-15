@@ -1,7 +1,5 @@
 package com.example.g508029.homefinancialcontrol.presenter;
 
-import android.util.Log;
-
 import com.example.g508029.homefinancialcontrol.CategoryGroupedListGenerator;
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
 import com.example.g508029.homefinancialcontrol.TransactionsBuilder;
@@ -12,15 +10,12 @@ import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.model.TransactionsMonthly;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
 import com.example.g508029.homefinancialcontrol.service.IExternalService;
-import com.example.g508029.homefinancialcontrol.system.IFileSystem;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import static android.content.ContentValues.TAG;
 import static com.example.g508029.homefinancialcontrol.Constants.EXPENSE_DESCRIPTION;
 import static com.example.g508029.homefinancialcontrol.Constants.LAST_TRANSACTIONS_COUNTER;
 import static com.example.g508029.homefinancialcontrol.Constants.MMMMyyyy_DATE_FORMAT_PATTERN;
@@ -74,11 +69,5 @@ public class MainPresenter {
         this.view.setMonthlyBalanceValue(monthlyBalanceValue);
         this.view.setCategoryChart(generate);
         this.view.setLastTransactions(TransactionHelper.toTransactionsModelViewList(lastTransactions, this.formatHelper));
-    }
-
-    public void onDownloaderTransactionExternalFile(String path){
-        TransactionsBuilder transactionsBuilder = new TransactionsBuilder(repository);
-        TransactionsMonthly transactionsMonthly = transactionsBuilder.buildTransactionsMonthly(02, 2019);
-        //this.externalService.exportTransactionsMonthly(path + "/transacoes.xls", transactionsMonthly);
     }
 }

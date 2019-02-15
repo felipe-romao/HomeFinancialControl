@@ -1,11 +1,15 @@
 package com.example.g508029.homefinancialcontrol.presenter;
 
+import android.util.Log;
+
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
 import com.example.g508029.homefinancialcontrol.TransactionsBuilder;
 import com.example.g508029.homefinancialcontrol.model.TransactionsYearly;
 import com.example.g508029.homefinancialcontrol.service.IExternalService;
 
 import java.util.Calendar;
+
+import static android.content.ContentValues.TAG;
 
 public class ExportTransactionsPresenter {
     public interface IExportTransactionsView{
@@ -37,10 +41,15 @@ public class ExportTransactionsPresenter {
     public void onDownloaderTransactionExternalFile(){
         try {
             Calendar calendar = Calendar.getInstance();
-            int monthCurrent = calendar.get(Calendar.MONTH - 1);
+            int monthCurrent = calendar.get(Calendar.MONTH) + 1;
             int year = Integer.valueOf(this.view.getYear());
+            Log.d(TAG, "onDownloaderTransactionExternalFile: ano: " + year);
+            Log.d(TAG, "onDownloaderTransactionExternalFile: mes corrente: " + monthCurrent);
+
             TransactionsBuilder transactionsBuilder = new TransactionsBuilder(repository);
-            TransactionsYearly transactionsYearly = transactionsBuilder.buildTransactionsYearly(01, monthCurrent, year);
+            TransactionsYearly transactionsYearly = transactionsBuilder.buildTransactionsYearly(1, monthCurrent, year);
+
+            Log.d(TAG, "onDownloaderTransactionExternalFile: qtde meses: " + transactionsYearly.getTransactionsMonthlies().size());
 
             String fullPath = this.view.getPath() + "/lista_movimentacao_" + year + ".xls";
             this.externalService.exportTransactionsMonthly(fullPath, transactionsYearly);
