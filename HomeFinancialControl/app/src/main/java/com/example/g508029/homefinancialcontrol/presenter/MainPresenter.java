@@ -35,13 +35,11 @@ public class MainPresenter {
     private IMainView view;
     private TransactionRepository repository;
     private FormatHelper formatHelper;
-    private IExternalService externalService;
 
-    public MainPresenter(IMainView view, TransactionRepository repository, FormatHelper formatHelper, IExternalService externalService) {
+    public MainPresenter(IMainView view, TransactionRepository repository, FormatHelper formatHelper) {
         this.view = view;
         this.repository = repository;
         this.formatHelper = formatHelper;
-        this.externalService = externalService;
     }
 
     public void initialize(){

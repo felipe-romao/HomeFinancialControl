@@ -28,6 +28,7 @@ public class ExportTransactionsActivity extends AppCompatActivity implements Exp
     private TransactionRepository repository;
     private IExternalService externalService;
     private ExportTransactionsPresenter presenter;
+    private TextView filePathTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +59,15 @@ public class ExportTransactionsActivity extends AppCompatActivity implements Exp
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
     }
 
+    @Override
+    public void setPath(String path) {
+        this.filePathTextView.setText(path);
+    }
+
     private void getItemsFromActivity() {
         this.yearEditText = findViewById(R.id.export_transactions_year_editText);
         this.resultTextView = findViewById(R.id.export_transactions_result_textView);
+        this.filePathTextView = findViewById(R.id.export_transactions_file_path_textView);
         this.exportButton = findViewById(R.id.export_transactions_button);
     }
 

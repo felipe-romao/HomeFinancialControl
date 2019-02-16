@@ -17,6 +17,7 @@ public class ExportTransactionsPresenter {
         String getYear();
         void showResult(String result);
         String getPath();
+        void setPath(String path);
     }
 
     private IExportTransactionsView view;
@@ -43,17 +44,14 @@ public class ExportTransactionsPresenter {
             Calendar calendar = Calendar.getInstance();
             int monthCurrent = calendar.get(Calendar.MONTH) + 1;
             int year = Integer.valueOf(this.view.getYear());
-            Log.d(TAG, "onDownloaderTransactionExternalFile: ano: " + year);
-            Log.d(TAG, "onDownloaderTransactionExternalFile: mes corrente: " + monthCurrent);
 
             TransactionsBuilder transactionsBuilder = new TransactionsBuilder(repository);
             TransactionsYearly transactionsYearly = transactionsBuilder.buildTransactionsYearly(1, monthCurrent, year);
 
-            Log.d(TAG, "onDownloaderTransactionExternalFile: qtde meses: " + transactionsYearly.getTransactionsMonthlies().size());
-
             String fullPath = this.view.getPath() + "/lista_movimentacao_" + year + ".xls";
             this.externalService.exportTransactionsMonthly(fullPath, transactionsYearly);
-            this.view.showResult("Arquivo gerado com sucesso: " + fullPath);
+            this.view.showResult("Arquivo exportado com sucesso");
+            this.view.setPath(fullPath);
 
         }catch (Exception ex){
             this.view.showResult("Não foi possivel exportar as transações: " + ex.getMessage());

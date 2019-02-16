@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import static android.content.ContentValues.TAG;
 import static com.example.g508029.homefinancialcontrol.Constants.HHmm_TIME_FORMAT_PATTERN;
 
 public class TimePickerFragment{
@@ -28,16 +29,18 @@ public class TimePickerFragment{
     private int hour;
     private int minute;
     private FormatHelper formatHelper;
+    private Locale locale;
 
-    public TimePickerFragment(Context context, FormatHelper formatHelper, EditText editText){
+    public TimePickerFragment(Context context, FormatHelper formatHelper, EditText editText, Locale locale){
         this.context = context;
         this.formatHelper = formatHelper;
         this.editText = editText;
+        this.locale = locale;
 //        initialize();
     }
 
     public void initialize(){
-        Calendar c = Calendar.getInstance();
+        Calendar c = Calendar.getInstance(locale);
         try {
             if (!editText.getText().toString().isEmpty())
             {
@@ -47,7 +50,8 @@ public class TimePickerFragment{
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        setHour(c.get(Calendar.HOUR));
+
+        setHour(c.get(Calendar.HOUR_OF_DAY));
         setMinute(c.get(Calendar.MINUTE));
 
         if(editText.getText().toString().isEmpty()){

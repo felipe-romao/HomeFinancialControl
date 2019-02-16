@@ -26,16 +26,18 @@ public class DatePickerFragment{
     private FormatHelper formatHelper;
     private EditText editText;
     private DatePickerDialog datePickerDialog;
+    private Locale locale;
 
-    public DatePickerFragment(Context context, FormatHelper formatHelper, EditText editText) {
+    public DatePickerFragment(Context context, FormatHelper formatHelper, EditText editText, Locale locale) {
         this.context  = context;
         this.formatHelper = formatHelper;
         this.editText = editText;
+        this.locale = locale;
         //this.initialize();
     }
 
     public void initialize(){
-        Calendar c = Calendar.getInstance();
+        Calendar c = Calendar.getInstance(this.locale);
         try {
             if (!editText.getText().toString().isEmpty())
             {

@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
     private FormatHelper formatHelper;
     private TransactionRepository transactionRepository;
     private MainPresenter presenter;
-    private IExternalService externalService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,8 +175,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
         Locale mLocale = new Locale("pt", "BR");
         this.formatHelper = new FormatHelper(mLocale);
         this.transactionRepository  = new SQLiteTransactionRepository(this);
-        this.externalService = new FileExternalService(new FileSystem(), this.formatHelper);
-        this.presenter = new MainPresenter(this, this.transactionRepository, this.formatHelper, this.externalService);
+        this.presenter = new MainPresenter(this, this.transactionRepository, this.formatHelper);
         this.presenter.initialize();
     }
 

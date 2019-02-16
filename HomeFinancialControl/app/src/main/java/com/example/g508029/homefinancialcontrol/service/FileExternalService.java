@@ -20,6 +20,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,53 +43,31 @@ public class FileExternalService implements IExternalService {
             Workbook wb = new HSSFWorkbook();
             Cell c = null;
 
-            //Cell style for header row
             CellStyle cs = wb.createCellStyle();
-            cs.setFillForegroundColor(HSSFColor.AUTOMATIC.index);
-            cs.setFillPattern(HSSFCellStyle.ALIGN_CENTER);
+            cs.setFillForegroundColor(HSSFColor.YELLOW.index);
+            cs.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 
-            //New Sheet
             Sheet sheet1 = null;
             sheet1 = wb.createSheet("Transações");
 
-            Map<Integer, String> headerValues = new HashMap<>();
-            headerValues.put(0, "Data");
-            headerValues.put(1, "Tipo");
-            headerValues.put(2, "Categoria");
-            headerValues.put(3, "Pagamento");
-            headerValues.put(4, "Valor");
-            headerValues.put(5, "Descrição");
-
-            Row row = sheet1.createRow(0);
+            Row headerRow = sheet1.createRow(0);
+            Map<Integer, String> headerValues = this.createHeaderValues();
             for (int headerPos : headerValues.keySet()){
-                c = row.createCell(headerPos);
+                c = headerRow.createCell(headerPos);
                 c.setCellValue(headerValues.get(headerPos));
                 c.setCellStyle(cs);
             }
             int pos = 1;
 
             for(TransactionsMonthly transactionsMonthly: transactionsYearly.getTransactionsMonthlies()){
-
                 for (Transaction transaction: transactionsMonthly.getTransactions()){
-                    Row row2 = sheet1.createRow(pos);
-                    c = row2.createCell(0);
-                    c.setCellValue(formatHelper.fromDateToString(MMddyyyyKma_DATE_FORMAT_PATTERN,transaction.getDate()));
-
-                    c = row2.createCell(1);
-                    c.setCellValue(transaction.getType());
-
-                    c = row2.createCell(2);
-                    c.setCellValue(transaction.getCategory());
-
-                    c = row2.createCell(3);
-                    c.setCellValue(transaction.getPaymentMode());
-
-                    c = row2.createCell(4);
-                    c.setCellValue(formatHelper.fromDoubleToCurrencyString(transaction.getValue()));
-
-                    c = row2.createCell(5);
-                    c.setCellValue(transaction.getDescription());
-
+                    Row detailRow = sheet1.createRow(pos);
+                    this.populateRow(detailRow, c, 0, formatHelper.fromDateToString(MMddyyyyKma_DATE_FORMAT_PATTERN,transaction.getDate()));
+                    this.populateRow(detailRow, c, 1, transaction.getType());
+                    this.populateRow(detailRow, c, 2, transaction.getCategory());
+                    this.populateRow(detailRow, c, 3, transaction.getPaymentMode());
+                    this.populateRow(detailRow, c, 4, formatHelper.fromDoubleToCurrencyString(transaction.getValue()));
+                    this.populateRow(detailRow, c, 5, transaction.getDescription());
                     pos++;
                 }
             }
@@ -102,5 +81,21 @@ public class FileExternalService implements IExternalService {
             e.printStackTrace();
             Log.d(TAG, "exportTransactionsMonthly: error:" + e.getMessage());
         }
+    }
+
+    private void populateRow(Row row, Cell cell, int column, String value){
+        cell = row.createCell(column);
+        cell.setCellValue(value);
+    }
+
+    private Map<Integer,String> createHeaderValues() {
+        HashMap<Integer, String> headerValues = new HashMap<>();
+        headerValues.put(0, "Data");
+        headerValues.put(1, "Tipo");
+        headerValues.put(2, "Categoria");
+        headerValues.put(3, "Pagamento");
+        headerValues.put(4, "Valor");
+        headerValues.put(5, "Descrição");
+        return headerValues;
     }
 }

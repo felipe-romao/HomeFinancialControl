@@ -51,6 +51,7 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     private ArrayAdapter<String> kindsAdapter;
     private ICategoryRepository categoryRepository;
     private IPaymentModeRepository paymentModeRepository;
+    private Locale mLocale;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -164,12 +165,12 @@ public class TransactionFragment extends Fragment implements TransactionFragment
         this.transactionTimeEditText        = view.findViewById(R.id.transaciton_frag_time);
         this.transactionValueEditText       = view.findViewById(R.id.transaciton_frag_value);
         this.transactionAnnotationEditText  = view.findViewById(R.id.transaciton_frag_description);
-        this.datePickerFragment             = new DatePickerFragment(getContext(), this.formatHelper, this.transactionDateEditText);
-        this.timePickerFragment             = new TimePickerFragment(getContext(), this.formatHelper, this.transactionTimeEditText);
+        this.datePickerFragment             = new DatePickerFragment(getContext(), this.formatHelper, this.transactionDateEditText, this.mLocale);
+        this.timePickerFragment             = new TimePickerFragment(getContext(), this.formatHelper, this.transactionTimeEditText, this.mLocale);
     }
 
     private void initialize(){
-        Locale mLocale      = new Locale("pt", "BR");
+        this.mLocale        = new Locale("pt", "BR");
         DBHelper dbHelper   = new DBHelper(getContext());
         this.formatHelper   = new FormatHelper(mLocale);
         this.repository     = new SQLiteTransactionRepository(getContext(), dbHelper);
