@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static android.content.ContentValues.TAG;
+
 public class FormatHelper {
     private SimpleDateFormat dateFormat;
     private NumberFormat numberFormat;
@@ -54,6 +56,7 @@ public class FormatHelper {
     }
 
     public String getMonthNameCurrent(){
-        return this.getMonthNames().get(Calendar.getInstance(this.locale).MONTH - 1);
+        Calendar c = Calendar.getInstance(this.locale);
+        return this.getMonthNames().get(c.get(c.MONTH));
     }
 }
