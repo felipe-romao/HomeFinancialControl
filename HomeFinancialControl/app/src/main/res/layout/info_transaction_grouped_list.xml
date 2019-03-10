@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+        <TableRow>
+            <TextView
+                android:id="@+id/info_total_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                android:textSize="14sp"
+                android:gravity="center|left"
+                android:text="(3)" />
+            <TextView
+                android:id="@+id/info_description_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.55"
+                android:textSize="14sp"
+                android:gravity="center|left"
+                android:text="Alimentação" />
+            <TextView
+                android:id="@+id/info_sum_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:textSize="14sp"
+                android:gravity="center|right"
+                android:text="R$ 500,00" />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

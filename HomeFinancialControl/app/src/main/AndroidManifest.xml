@@ -24,7 +24,9 @@
         <activity android:name=".CategoryManagerActivity" />
         <activity android:name=".TransactionsReportActivity" />
         <activity android:name=".CategoryReportActivity" />
-        <activity android:name=".ExportTransactionsActivity"></activity>
+        <activity android:name=".ExportTransactionsActivity" />
+        <activity android:name=".PaymentModeReportActivity" />
+        <activity android:name=".FiltredTransactionsActivity"></activity>
     </application>
 
 </manifest>

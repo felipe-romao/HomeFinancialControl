@@ -21,7 +21,6 @@ public class TransactionsReportAdapter extends BaseAdapter{
         this.modelViews = modelViews;
     }
 
-
     @Override
     public int getCount() {
         return this.modelViews.size();

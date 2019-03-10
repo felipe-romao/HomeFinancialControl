@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.g508029.homefinancialcontrol.model.InfoTransactionGrouped;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 
 import java.util.ArrayList;
@@ -86,6 +87,42 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY date DESC LIMIT ?";
         Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(quantity)});
 
+        return populateTransactions(cursor);
+    }
+
+    public List<InfoTransactionGrouped> getPaymentModeSumByMonth(int month, int year){
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+
+        String monthFormatted = String.format("%02d", month);
+        String sql = "select payment_mode, count(id) as quantity, sum(value) as total from " + TABLE_NAME +
+                " where strftime('%m', date / 1000, 'unixepoch') = ? and " +
+                "strftime('%Y', date / 1000, 'unixepoch') = ? " +
+                " group by payment_mode";
+
+        Cursor cursor = db.rawQuery(sql, new String[]{monthFormatted, String.valueOf(year)});
+
+        List<InfoTransactionGrouped> groupedList = new ArrayList<>();
+        while (cursor.moveToNext()){
+            InfoTransactionGrouped grouped = new InfoTransactionGrouped();
+            grouped.setDescription(cursor.getString(cursor.getColumnIndex("payment_mode")));
+            grouped.setQuantity(cursor.getInt(cursor.getColumnIndex("quantity")));
+            grouped.setTotal(cursor.getDouble(cursor.getColumnIndex("total")));
+
+            groupedList.add(grouped);
+        }
+        return groupedList;
+    }
+
+    public List<Transaction> getTransactionsByPaymentModeAndMonthAndYear(String paymentMode, int monthSelected, int year){
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+        String monthFormatted = String.format("%02d", monthSelected);
+
+        String sql = "select * from " + TABLE_NAME +
+                " where strftime('%m', date / 1000, 'unixepoch') = ? and " +
+                "strftime('%Y', date / 1000, 'unixepoch') = ? and " +
+                " payment_mode = ?;";
+
+        Cursor cursor = db.rawQuery(sql, new String[]{monthFormatted, String.valueOf(year), paymentMode});
         return populateTransactions(cursor);
     }
 

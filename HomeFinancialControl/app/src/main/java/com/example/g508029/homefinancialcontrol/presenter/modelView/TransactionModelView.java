@@ -1,6 +1,8 @@
 package com.example.g508029.homefinancialcontrol.presenter.modelView;
 
-public class TransactionModelView {
+import java.io.Serializable;
+
+public class TransactionModelView implements Serializable {
     private String id;
     private String paymentMode;
     private String date;

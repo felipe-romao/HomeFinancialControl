@@ -147,6 +147,10 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.IMa
                 Intent transactionsReportIntent = new Intent(this, TransactionsReportActivity.class);
                 startActivity(transactionsReportIntent);
                 break;
+            case R.id.main_menu_payment_mode_report:
+                Intent paymentModeReportIntent = new Intent(this, PaymentModeReportActivity.class);
+                startActivity(paymentModeReportIntent);
+                break;
             case R.id.main_menu_export_transactions_report:
                 Intent exportTransactionsIntent = new Intent(this, ExportTransactionsActivity.class);
                 startActivity(exportTransactionsIntent);

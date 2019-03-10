@@ -14,9 +14,11 @@
         android:id="@+id/main_menu_category_report"
         android:title="Relatório por categoria" />
     <item
+        android:id="@+id/main_menu_payment_mode_report"
+        android:title="Relatório por meio de pagamento" />
+    <item
         android:id="@+id/main_menu_transactions_report"
         android:title="Relatório das transações" />
-
     <item
         android:id="@+id/main_menu_export_transactions_report"
         android:title="Exportar transações" />
