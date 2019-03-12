@@ -15,4 +15,5 @@ public interface TransactionRepository {
     void deleteTransaction(String id);
     List<Transaction> getLastTransactions(int quantity);
     List<Transaction> getTransactionsByPaymentModeAndMonthAndYear(String paymentMode, int monthSelected, int year);
+    List<Transaction> getTransactionsByCategoryAndMonthAndYear(String category, int monthSelected, int year);
 }

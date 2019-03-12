@@ -16,7 +16,7 @@ import java.util.List;
 import static com.example.g508029.homefinancialcontrol.Constants.EXPENSE_DESCRIPTION;
 import static com.example.g508029.homefinancialcontrol.Constants.INCOME_DESCRIPTION;
 import static com.example.g508029.homefinancialcontrol.Constants.MMMMyyyy_DATE_FORMAT_PATTERN;
-import static com.example.g508029.homefinancialcontrol.Constants.MMddyyyyKma_DATE_FORMAT_PATTERN;
+import static com.example.g508029.homefinancialcontrol.Constants.ddMMyyyyKma_DATE_FORMAT_PATTERN;
 
 public final class TransactionHelper {
     public static List<String> getTransactionTypes(){
@@ -55,7 +55,7 @@ public final class TransactionHelper {
     public static TransactionModelView toTransactionModelView(Transaction transaction, FormatHelper formatHelper){
         TransactionModelView modelView = new TransactionModelView();
         modelView.setId(transaction.getId());
-        modelView.setDate(formatHelper.fromDateToString(MMddyyyyKma_DATE_FORMAT_PATTERN, transaction.getDate()));
+        modelView.setDate(formatHelper.fromDateToString(ddMMyyyyKma_DATE_FORMAT_PATTERN, transaction.getDate()));
         modelView.setDescription(transaction.getDescription());
         modelView.setPaymentMode(transaction.getPaymentMode());
         modelView.setCategory(transaction.getCategory());

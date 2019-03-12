@@ -126,6 +126,19 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         return populateTransactions(cursor);
     }
 
+    public List<Transaction> getTransactionsByCategoryAndMonthAndYear(String category, int monthSelected, int year){
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+        String monthFormatted = String.format("%02d", monthSelected);
+
+        String sql = "select * from " + TABLE_NAME +
+                " where strftime('%m', date / 1000, 'unixepoch') = ? and " +
+                "strftime('%Y', date / 1000, 'unixepoch') = ? and " +
+                " category = ?;";
+
+        Cursor cursor = db.rawQuery(sql, new String[]{monthFormatted, String.valueOf(year), category});
+        return populateTransactions(cursor);
+    }
+
     @NonNull
     private ContentValues getContentValues(Transaction transaction) {
         ContentValues values = new ContentValues();

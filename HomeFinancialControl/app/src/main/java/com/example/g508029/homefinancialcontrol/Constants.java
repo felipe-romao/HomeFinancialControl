@@ -6,7 +6,7 @@ public class Constants {
     public static final String HHmm_TIME_FORMAT_PATTERN = "HH:mm";
     public static final String ddMMyy_DATE_FORMAT_PATTERN = "dd/MM/yyyy";
     public static final String MMMMyyyy_DATE_FORMAT_PATTERN = "MMMM / yyyy";
-    public static final String MMddyyyyKma_DATE_FORMAT_PATTERN = "MM/dd/yyyy K:m a";
+    public static final String ddMMyyyyKma_DATE_FORMAT_PATTERN = "dd/MM/yyyy K:m a";
     public static final String INCOME_DESCRIPTION = "RECEITA";
     public static final String EXPENSE_DESCRIPTION = "DESPESA";
 

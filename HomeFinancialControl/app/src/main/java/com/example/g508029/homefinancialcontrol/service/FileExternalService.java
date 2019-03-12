@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
-import static com.example.g508029.homefinancialcontrol.Constants.MMddyyyyKma_DATE_FORMAT_PATTERN;
+import static com.example.g508029.homefinancialcontrol.Constants.ddMMyyyyKma_DATE_FORMAT_PATTERN;
 
 public class FileExternalService implements IExternalService {
     private IFileSystem fileSystem;
@@ -62,7 +62,7 @@ public class FileExternalService implements IExternalService {
             for(TransactionsMonthly transactionsMonthly: transactionsYearly.getTransactionsMonthlies()){
                 for (Transaction transaction: transactionsMonthly.getTransactions()){
                     Row detailRow = sheet1.createRow(pos);
-                    this.populateRow(detailRow, c, 0, formatHelper.fromDateToString(MMddyyyyKma_DATE_FORMAT_PATTERN,transaction.getDate()));
+                    this.populateRow(detailRow, c, 0, formatHelper.fromDateToString(ddMMyyyyKma_DATE_FORMAT_PATTERN,transaction.getDate()));
                     this.populateRow(detailRow, c, 1, transaction.getType());
                     this.populateRow(detailRow, c, 2, transaction.getCategory());
                     this.populateRow(detailRow, c, 3, transaction.getPaymentMode());

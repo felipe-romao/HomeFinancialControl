@@ -75,12 +75,17 @@ public class PaymentModeReportPresenter {
     }
 
     public void onShowTransactionsDetail() {
-        InfoTransactionGroupedModelView modelView = this.view.getSelectedInfoTransactionModelView();
-        Integer monthSelected = this.formatHelper.getMonthNumberByName(this.view.getMonthSelected());
-        Integer year = Integer.valueOf(this.view.getYear());
+        try {
+            InfoTransactionGroupedModelView modelView = this.view.getSelectedInfoTransactionModelView();
+            Integer monthSelected = this.formatHelper.getMonthNumberByName(this.view.getMonthSelected());
+            Integer year = Integer.valueOf(this.view.getYear());
 
-        List<Transaction> transactions = this.repository.getTransactionsByPaymentModeAndMonthAndYear(modelView.getDescription(), monthSelected, year);
-        this.view.setTransactionsFromSelectedPaymentMode(TransactionHelper.toTransactionsModelViewList(transactions, this.formatHelper));
+            List<Transaction> transactions = this.repository.getTransactionsByPaymentModeAndMonthAndYear(modelView.getDescription(), monthSelected, year);
+            this.view.setTransactionsFromSelectedPaymentMode(TransactionHelper.toTransactionsModelViewList(transactions, this.formatHelper));
+
+        } catch (Exception ex){
+            this.view.showMessage("Ocorreu um erro ao tentar listas as transações: " + ex.getMessage());
+        }
     }
 
 }

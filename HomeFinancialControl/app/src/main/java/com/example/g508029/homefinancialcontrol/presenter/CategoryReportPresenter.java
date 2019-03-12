@@ -9,6 +9,7 @@ import com.example.g508029.homefinancialcontrol.helper.TransactionHelper;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.model.TransactionsMonthly;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.CategoryGroupedModelView;
+import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public class CategoryReportPresenter {
         String getYear();
         void setCategoryModelViews(List<CategoryGroupedModelView> categoryGroupedModelViews);
         void showMessage(String message);
+        CategoryGroupedModelView getSelectedCategoryGroupedModelView();
+        void setTransactionsFromSelectedCategory(List<TransactionModelView> modelViews);
     }
 
     private ICategoryReportView view;
@@ -72,5 +75,20 @@ public class CategoryReportPresenter {
         } catch (Exception ex){
             this.view.showMessage("Ocorreu um erro ao tentar buscar dados: " + ex.getMessage());
         }
+    }
+
+    public void onShowTransactionsDetail() {
+        try{
+            CategoryGroupedModelView modelView = this.view.getSelectedCategoryGroupedModelView();
+            Integer monthSelected = this.formatHelper.getMonthNumberByName(this.view.getMonthSelected());
+            Integer year = Integer.valueOf(this.view.getYear());
+
+            List<Transaction> transactions = this.repository.getTransactionsByCategoryAndMonthAndYear(modelView.getDescription(), monthSelected, year);
+            this.view.setTransactionsFromSelectedCategory(TransactionHelper.toTransactionsModelViewList(transactions, this.formatHelper));
+
+        }catch (Exception ex){
+            this.view.showMessage("Ocorreu um erro ao tentar listas as transações: " + ex.getMessage());
+        }
+
     }
 }

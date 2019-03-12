@@ -1,9 +1,11 @@
 package com.example.g508029.homefinancialcontrol;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +19,9 @@ import com.example.g508029.homefinancialcontrol.adpter.CategoryReportAdapter;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 import com.example.g508029.homefinancialcontrol.presenter.CategoryReportPresenter;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.CategoryGroupedModelView;
+import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,6 +39,7 @@ public class CategoryReportActivity extends AppCompatActivity implements Categor
     private ArrayAdapter<String> transactionTypesAdpter;
     private CategoryReportAdapter categoryReportAdapter;
     private boolean hasHeaderCategoriesListView = false;
+    private CategoryGroupedModelView selectedCategoryModelView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,11 +122,30 @@ public class CategoryReportActivity extends AppCompatActivity implements Categor
         return adapter;
     }
 
+    public CategoryGroupedModelView getSelectedCategoryGroupedModelView(){
+        return this.selectedCategoryModelView;
+    }
+
+    public void setTransactionsFromSelectedCategory(List<TransactionModelView> modelViews){
+        Intent intent = new Intent(CategoryReportActivity.this, FiltredTransactionsActivity.class);
+        intent.putExtra("transactions", (Serializable) modelViews);
+        intent.putExtra("title", "Categoria: " + this.selectedCategoryModelView.getDescription());
+        startActivity(intent);
+    }
+
     private void initializeListernsEvent() {
         this.searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.onGetAllCategoriesTotalizers();
+            }
+        });
+
+        this.categoriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedCategoryModelView = (CategoryGroupedModelView) categoriesListView.getItemAtPosition(position);
+                presenter.onShowTransactionsDetail();
             }
         });
     }
