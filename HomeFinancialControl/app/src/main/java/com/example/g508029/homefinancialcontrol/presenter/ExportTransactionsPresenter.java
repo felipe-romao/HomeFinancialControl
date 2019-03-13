@@ -41,12 +41,9 @@ public class ExportTransactionsPresenter {
 
     public void onDownloaderTransactionExternalFile(){
         try {
-            Calendar calendar = Calendar.getInstance();
-            int monthCurrent = calendar.get(Calendar.MONTH) + 1;
             int year = Integer.valueOf(this.view.getYear());
-
             TransactionsBuilder transactionsBuilder = new TransactionsBuilder(repository);
-            TransactionsYearly transactionsYearly = transactionsBuilder.buildTransactionsYearly(1, monthCurrent, year);
+            TransactionsYearly transactionsYearly = transactionsBuilder.buildTransactionsYearly(1, 12, year);
 
             String fullPath = this.view.getPath() + "/lista_movimentacao_" + year + ".xls";
             this.externalService.exportTransactionsMonthly(fullPath, transactionsYearly);
