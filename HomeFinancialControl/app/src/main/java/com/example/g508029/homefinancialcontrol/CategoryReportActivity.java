@@ -25,7 +25,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
-public class CategoryReportActivity extends AppCompatActivity implements CategoryReportPresenter.ICategoryReportView {
+public class CategoryReportActivity extends HomeActivity implements CategoryReportPresenter.ICategoryReportView {
 
     private Spinner monthsSpinner;
     private Spinner movementTypesSpinner;

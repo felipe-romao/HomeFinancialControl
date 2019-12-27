@@ -41,7 +41,7 @@
             android:id="@+id/transaciton_frag_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textImeMultiLine"
+            android:inputType="textCapWords|textCapSentences|textImeMultiLine"
             android:hint="@string/transaction_fragment_description" />
 
         <LinearLayout

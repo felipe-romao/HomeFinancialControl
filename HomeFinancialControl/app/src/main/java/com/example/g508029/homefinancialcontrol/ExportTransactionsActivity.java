@@ -22,7 +22,7 @@ import com.example.g508029.homefinancialcontrol.system.FileSystem;
 
 import java.util.Locale;
 
-public class ExportTransactionsActivity extends AppCompatActivity implements ExportTransactionsPresenter.IExportTransactionsView{
+public class ExportTransactionsActivity extends HomeActivity implements ExportTransactionsPresenter.IExportTransactionsView{
 
     private EditText yearEditText;
     private TextView resultTextView;

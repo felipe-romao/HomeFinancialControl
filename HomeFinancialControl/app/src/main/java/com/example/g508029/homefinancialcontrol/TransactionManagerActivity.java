@@ -15,7 +15,7 @@ import com.example.g508029.homefinancialcontrol.adpter.FragmentPagerAdpter;
 import static com.example.g508029.homefinancialcontrol.Constants.EXPENSE_DESCRIPTION;
 import static com.example.g508029.homefinancialcontrol.Constants.INCOME_DESCRIPTION;
 
-public class TransactionManagerActivity extends AppCompatActivity {
+public class TransactionManagerActivity extends HomeActivity {
     private FragmentPagerAdpter adpter;
     private TabLayout tabLayout;
     private String transactionTypeSelected;

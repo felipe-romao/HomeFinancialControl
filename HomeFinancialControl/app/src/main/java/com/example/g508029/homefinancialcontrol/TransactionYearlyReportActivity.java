@@ -22,7 +22,7 @@ import com.example.g508029.homefinancialcontrol.presenter.modelView.Transactions
 import java.util.List;
 import java.util.Locale;
 
-public class TransactionYearlyReportActivity extends AppCompatActivity implements TransactionYearlyReportPresent.ITransactionYearlyReportView{
+public class TransactionYearlyReportActivity extends HomeActivity implements TransactionYearlyReportPresent.ITransactionYearlyReportView{
 
     private EditText yearEditText;
     private Button searchButton;

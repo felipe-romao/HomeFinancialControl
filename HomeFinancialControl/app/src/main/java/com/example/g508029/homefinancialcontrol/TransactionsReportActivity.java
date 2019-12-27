@@ -1,5 +1,6 @@
 package com.example.g508029.homefinancialcontrol;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -24,12 +25,13 @@ import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionM
 import java.util.List;
 import java.util.Locale;
 
-public class TransactionsReportActivity extends AppCompatActivity implements TransactionReportPresenter.ITransactionReportView {
+public class TransactionsReportActivity extends HomeActivity implements TransactionReportPresenter.ITransactionReportView {
 
     private EditText yearEdtitText;
     private Spinner monthSpinner;
     private ListView monthsListView;
     private Button searchButton;
+    private Button transactionNewButton;
     private FormatHelper formatHelper;
     private TransactionRepository repository;
     private TransactionReportPresenter presenter;
@@ -41,11 +43,20 @@ public class TransactionsReportActivity extends AppCompatActivity implements Tra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transactions_report);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.startUpConfig();
+        registerForContextMenu(this.monthsListView);
+    }
+
+    private void startUpConfig() {
         this.getItemsFromActivity();
         this.initialize();
         this.initializeListernsEvent();
-        registerForContextMenu(this.monthsListView);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     private void initializeListernsEvent() {
@@ -55,21 +66,30 @@ public class TransactionsReportActivity extends AppCompatActivity implements Tra
                 presenter.onGetAllTransactionsByPeriod();
             }
         });
+
+        this.transactionNewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TransactionsReportActivity.this, TransactionManagerActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initialize() {
-        Locale mLocale = new Locale("pt", "BR");
+        Locale mLocale    = new Locale("pt", "BR");
         this.formatHelper = new FormatHelper(mLocale);
-        this.repository  = new SQLiteTransactionRepository(this);
-        this.presenter = new TransactionReportPresenter(this, this.repository, this.formatHelper);
+        this.repository   = new SQLiteTransactionRepository(this);
+        this.presenter    = new TransactionReportPresenter(this, this.repository, this.formatHelper);
         this.presenter.initialize();
     }
 
     private void getItemsFromActivity() {
-        this.yearEdtitText = findViewById(R.id.transaction_report_year_editText);
-        this.monthSpinner = findViewById(R.id.transaction_report_month_spinner);
-        this.monthsListView = findViewById(R.id.transaction_report_listview);
-        this.searchButton = findViewById(R.id.transaction_report_search_button);
+        this.yearEdtitText        = findViewById(R.id.transaction_report_year_editText);
+        this.monthSpinner         = findViewById(R.id.transaction_report_month_spinner);
+        this.monthsListView       = findViewById(R.id.transaction_report_listview);
+        this.searchButton         = findViewById(R.id.transaction_report_search_button);
+        this.transactionNewButton = findViewById(R.id.transaction_report_new_movement_button);
     }
 
     @Override

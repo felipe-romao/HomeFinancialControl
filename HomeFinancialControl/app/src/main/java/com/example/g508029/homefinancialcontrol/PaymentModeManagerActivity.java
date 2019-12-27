@@ -21,7 +21,7 @@ import com.example.g508029.homefinancialcontrol.presenter.PaymentModeManagerPres
 
 import java.util.List;
 
-public class PaymentModeManagerActivity extends AppCompatActivity implements PaymentModeManagerPresenter.IPaymentModeManagerView{
+public class PaymentModeManagerActivity extends HomeActivity implements PaymentModeManagerPresenter.IPaymentModeManagerView{
 
     private static final String TAG = "TESTE";
     private EditText descriptionEditText;

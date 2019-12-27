@@ -22,7 +22,7 @@ import com.example.g508029.homefinancialcontrol.presenter.CategoryManagerPresent
 
 import java.util.List;
 
-public class CategoryManagerActivity extends AppCompatActivity implements ICategoryManagerView{
+public class CategoryManagerActivity extends HomeActivity implements ICategoryManagerView{
 
     private EditText descriptionEditText;
     private ListView categoryListView;

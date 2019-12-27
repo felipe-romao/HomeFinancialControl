@@ -26,7 +26,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
-public class PaymentModeReportActivity extends AppCompatActivity implements PaymentModeReportPresenter.IPaymentModeReportView{
+public class PaymentModeReportActivity extends HomeActivity implements PaymentModeReportPresenter.IPaymentModeReportView{
 
     private Spinner monthSpinner;
     private ListView infoListView;

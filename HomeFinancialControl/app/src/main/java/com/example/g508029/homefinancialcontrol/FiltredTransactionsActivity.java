@@ -12,7 +12,7 @@ import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionM
 
 import java.util.List;
 
-public class FiltredTransactionsActivity extends AppCompatActivity {
+public class FiltredTransactionsActivity extends HomeActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

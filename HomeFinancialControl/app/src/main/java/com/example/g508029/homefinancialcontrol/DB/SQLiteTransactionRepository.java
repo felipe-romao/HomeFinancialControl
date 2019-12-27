@@ -55,7 +55,7 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " +
                 "strftime('%m', date / 1000, 'unixepoch') = ? " +
                 "and " +
-                "strftime('%Y', date / 1000, 'unixepoch') = ? order by date ASC;";
+                "strftime('%Y', date / 1000, 'unixepoch') = ? order by date DESC;";
         String[] args = new String[]{monthFormatted, String.valueOf(year)};
         Cursor cursor = db.rawQuery(sql, args);
         return populateTransactions(cursor);
@@ -69,7 +69,7 @@ public class SQLiteTransactionRepository implements TransactionRepository{
                 "strftime('%m', date / 1000, 'unixepoch') = ? " +
                 "and " +
                 "strftime('%Y', date / 1000, 'unixepoch') = ? " +
-                "and type = ? order by date ASC;";
+                "and type = ? order by date DESC;";
         String[] args = new String[]{monthFormatted, String.valueOf(year), type};
         Cursor cursor = db.rawQuery(sql, args);
         return populateTransactions(cursor);
@@ -120,7 +120,7 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         String sql = "select * from " + TABLE_NAME +
                 " where strftime('%m', date / 1000, 'unixepoch') = ? and " +
                 "strftime('%Y', date / 1000, 'unixepoch') = ? and " +
-                " payment_mode = ?;";
+                " payment_mode = ? order by date DESC;";
 
         Cursor cursor = db.rawQuery(sql, new String[]{monthFormatted, String.valueOf(year), paymentMode});
         return populateTransactions(cursor);
@@ -133,7 +133,7 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         String sql = "select * from " + TABLE_NAME +
                 " where strftime('%m', date / 1000, 'unixepoch') = ? and " +
                 "strftime('%Y', date / 1000, 'unixepoch') = ? and " +
-                " category = ?;";
+                " category = ? order by date DESC;";
 
         Cursor cursor = db.rawQuery(sql, new String[]{monthFormatted, String.valueOf(year), category});
         return populateTransactions(cursor);
