@@ -94,7 +94,9 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
 
         String monthFormatted = String.format("%02d", month);
-        String sql = "select payment_mode, count(id) as quantity, sum(value) as total from " + TABLE_NAME +
+        String sql = "select payment_mode, count(id) as quantity, " +
+                "sum(case type when 'DESPESA' then -(value) " +
+                        "else value end) as total  from " + TABLE_NAME +
                 " where strftime('%m', date / 1000, 'unixepoch') = ? and " +
                 "strftime('%Y', date / 1000, 'unixepoch') = ? " +
                 " group by payment_mode";
