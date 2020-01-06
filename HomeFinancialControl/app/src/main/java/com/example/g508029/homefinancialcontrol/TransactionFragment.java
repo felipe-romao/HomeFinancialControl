@@ -1,5 +1,6 @@
 package com.example.g508029.homefinancialcontrol;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -45,10 +46,12 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     private EditText transactionAnnotationEditText;
     private Spinner transactionCategoriesSpinner;
     private Spinner transactionKindsSpinner;
+    private Spinner optionsCashesSpinner;
     private TransactionRepository repository;
     private TransactionFragmentPresenter presenter;
     private ArrayAdapter<String> categoriesAdapter;
     private ArrayAdapter<String> kindsAdapter;
+    private ArrayAdapter<String> optionsCashesAdapter;
     private ICategoryRepository categoryRepository;
     private IPaymentModeRepository paymentModeRepository;
     private Locale mLocale;
@@ -120,6 +123,11 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     }
 
     @Override
+    public int getOptionCashSelected() {
+        return  this.optionsCashesSpinner.getSelectedItemPosition() + 1;
+    }
+
+    @Override
     public void setInitialDateTime() {
         this.transactionDateEditText.setText("");
         this.transactionTimeEditText.setText("");
@@ -146,6 +154,12 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     }
 
     @Override
+    public void setOptionsCashes(List<String> optionsCashes) {
+        this.optionsCashesAdapter = getArrayAdpter(optionsCashes);
+        this.optionsCashesSpinner.setAdapter(optionsCashesAdapter);
+    }
+
+    @Override
     public void showMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
@@ -161,6 +175,7 @@ public class TransactionFragment extends Fragment implements TransactionFragment
         }
         this.transactionCategoriesSpinner   = view.findViewById(R.id.transaction_frag_category);
         this.transactionKindsSpinner        = view.findViewById(R.id.transaction_frag_kind);
+        this.optionsCashesSpinner           = view.findViewById(R.id.transaction_frag_option_cash);
         this.transactionDateEditText        = view.findViewById(R.id.transaciton_frag_date);
         this.transactionTimeEditText        = view.findViewById(R.id.transaciton_frag_time);
         this.transactionValueEditText       = view.findViewById(R.id.transaciton_frag_value);

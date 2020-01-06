@@ -46,7 +46,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <EditText
@@ -69,5 +69,20 @@
                 android:inputType="textImeMultiLine"
                 android:hint="@string/transaction_fragment_time" />
         </LinearLayout>
+
+        <Spinner
+            android:id="@+id/transaction_frag_option_cash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/transaction_fragment_option_cash"
+            />
+
+        <ListView
+            android:id="@+id/transaction_fragment_option_cash_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#a1a0a0"
+            android:dividerHeight="2px" />
+
     </LinearLayout>
 </FrameLayout>

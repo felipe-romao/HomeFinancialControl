@@ -4,13 +4,17 @@ import com.example.g508029.homefinancialcontrol.Constants;
 import com.example.g508029.homefinancialcontrol.DB.ICategoryRepository;
 import com.example.g508029.homefinancialcontrol.DB.IPaymentModeRepository;
 import com.example.g508029.homefinancialcontrol.model.Category;
+import com.example.g508029.homefinancialcontrol.model.Instalment;
 import com.example.g508029.homefinancialcontrol.model.PaymentMode;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.model.TransactionsMonthly;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionsMonthlyModelView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.g508029.homefinancialcontrol.Constants.EXPENSE_DESCRIPTION;
@@ -42,6 +46,49 @@ public final class TransactionHelper {
             kinds.add(paymentMode.getMode());
         }
         return kinds;
+    }
+
+    public static List<String> getOptionsCashes(){
+        ArrayList<String> optionsCashes = new ArrayList<>();
+
+        for (int option = 1; option <= 20; option++){
+            optionsCashes.add(GetOptionCashText(option));
+        }
+        return optionsCashes;
+    }
+
+    public static String GetOptionCashText(int number) {
+        if (number == 1) {
+            return "À vista";
+        }
+        return number + " vezes";
+    }
+
+    public static List<Instalment> getInstalmentsFromOptionsCashesSelected(double value, int instalmentQuantity, Date date, String description){
+        BigDecimal[] valueFromInstalment = new BigDecimal(value)
+                                                    .divideAndRemainder(new BigDecimal(instalmentQuantity));
+
+        ArrayList<Instalment> instalments = new ArrayList<>();
+
+        for (int id = 1; id <= instalmentQuantity; id++){
+            String instalmentDescription = description + "(" + id + "/" + instalmentQuantity + ")";
+            Date instalmentDate          = getDateFromInstalment(date, id - 1);
+            double instalmentValue       = id == instalmentQuantity
+                                                ? valueFromInstalment[0].doubleValue() + valueFromInstalment[1].doubleValue()
+                                                : valueFromInstalment[0].doubleValue();
+
+            instalments.add(new Instalment(id, instalmentValue, instalmentDescription, instalmentDate));
+        }
+
+        return instalments;
+    }
+
+    public static Date getDateFromInstalment(Date dateActual, int monthQuantity) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateActual);
+        calendar.add(calendar.MONTH, monthQuantity);
+
+        return calendar.getTime();
     }
 
     public static List<TransactionModelView> toTransactionsModelViewList(List<Transaction> transactions, FormatHelper formatHelper){

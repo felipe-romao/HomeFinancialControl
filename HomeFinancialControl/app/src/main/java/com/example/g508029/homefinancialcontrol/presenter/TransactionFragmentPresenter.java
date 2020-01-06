@@ -7,6 +7,7 @@ import com.example.g508029.homefinancialcontrol.DB.IPaymentModeRepository;
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 import com.example.g508029.homefinancialcontrol.helper.TransactionHelper;
+import com.example.g508029.homefinancialcontrol.model.Instalment;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 
 import java.text.ParseException;
@@ -28,10 +29,12 @@ public class TransactionFragmentPresenter {
         String getTransactionDate();
         String getTransactionTime();
         String getTransactionType();
+        int getOptionCashSelected();
         void setInitialDateTime();
         void setTransactionValue(String value);
         void setCategories(List<String> categories);
         void setPaymentModes(List<String> paymentModes);
+        void setOptionsCashes(List<String> optionsCashes);
         void showMessage(String message);
     }
 
@@ -55,6 +58,7 @@ public class TransactionFragmentPresenter {
             List<String> transactionPaymentModes = TransactionHelper.getTransactionKind(this.paymentModeRepository);
             this.view.setCategories(transactionCategories);
             this.view.setPaymentModes(transactionPaymentModes);
+            this.view.setOptionsCashes(TransactionHelper.getOptionsCashes());
             initializeValues();
 
         }catch (Exception ex){
@@ -78,6 +82,14 @@ public class TransactionFragmentPresenter {
 
             initializeValues();
             this.view.showMessage("Transação '" + transaction +"' gravada com sucesso!");
+
+            List<Instalment> optionsCashesSelected = TransactionHelper.getInstalmentsFromOptionsCashesSelected(value,
+                                                                                        this.view.getOptionCashSelected(),
+                                                                                        date,
+                                                                                        description);
+            for (Instalment instalment: optionsCashesSelected){
+                Log.d(TAG, "onAddNewTransaction: Date: " + instalment.getDate() + " Descricao: " + instalment.getDescription() + " Valor: " + instalment.getValue());
+            }
 
         }catch (Exception ex){
             this.view.showMessage("Ocorreu um erro ao tentar gravar esta transação: " + ex.getMessage());
