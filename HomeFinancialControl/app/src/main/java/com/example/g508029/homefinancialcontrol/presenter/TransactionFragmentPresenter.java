@@ -9,8 +9,10 @@ import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 import com.example.g508029.homefinancialcontrol.helper.TransactionHelper;
 import com.example.g508029.homefinancialcontrol.model.Instalment;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
+import com.example.g508029.homefinancialcontrol.presenter.modelView.IntelmentModeView;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -30,6 +32,8 @@ public class TransactionFragmentPresenter {
         String getTransactionTime();
         String getTransactionType();
         int getOptionCashSelected();
+        List<IntelmentModeView> getInstalments();
+        void setInstalments(List<IntelmentModeView> modelView);
         void setInitialDateTime();
         void setTransactionValue(String value);
         void setCategories(List<String> categories);
@@ -83,16 +87,32 @@ public class TransactionFragmentPresenter {
             initializeValues();
             this.view.showMessage("Transação '" + transaction +"' gravada com sucesso!");
 
-            List<Instalment> optionsCashesSelected = TransactionHelper.getInstalmentsFromOptionsCashesSelected(value,
-                                                                                        this.view.getOptionCashSelected(),
-                                                                                        date,
-                                                                                        description);
-            for (Instalment instalment: optionsCashesSelected){
-                Log.d(TAG, "onAddNewTransaction: Date: " + instalment.getDate() + " Descricao: " + instalment.getDescription() + " Valor: " + instalment.getValue());
-            }
-
         }catch (Exception ex){
             this.view.showMessage("Ocorreu um erro ao tentar gravar esta transação: " + ex.getMessage());
+        }
+    }
+
+    public void onOptionCashSelected() {
+        try {
+            int optionCashSelected = this.view.getOptionCashSelected();
+
+            if(optionCashSelected == 1){
+                this.view.setInstalments(new ArrayList<IntelmentModeView>());
+                return;
+            }
+
+            String description = this.view.getDescription();
+            double value       = this.formatHelper.fromCurrencyStringToDouble(this.view.getTransactionValue());
+            Date date          = this.getDateFromView();
+
+            List<Instalment> instalments = TransactionHelper.getInstalmentsFromOptionsCashesSelected(value,
+                    this.view.getOptionCashSelected(),
+                    date,
+                    description);
+
+            this.view.setInstalments(TransactionHelper.toInstalmentModelViewList(instalments, this.formatHelper));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

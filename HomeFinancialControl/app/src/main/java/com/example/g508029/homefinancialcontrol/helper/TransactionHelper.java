@@ -1,5 +1,7 @@
 package com.example.g508029.homefinancialcontrol.helper;
 
+import android.util.Log;
+
 import com.example.g508029.homefinancialcontrol.Constants;
 import com.example.g508029.homefinancialcontrol.DB.ICategoryRepository;
 import com.example.g508029.homefinancialcontrol.DB.IPaymentModeRepository;
@@ -8,15 +10,18 @@ import com.example.g508029.homefinancialcontrol.model.Instalment;
 import com.example.g508029.homefinancialcontrol.model.PaymentMode;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.model.TransactionsMonthly;
+import com.example.g508029.homefinancialcontrol.presenter.modelView.IntelmentModeView;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionModelView;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.TransactionsMonthlyModelView;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
 import static com.example.g508029.homefinancialcontrol.Constants.EXPENSE_DESCRIPTION;
 import static com.example.g508029.homefinancialcontrol.Constants.INCOME_DESCRIPTION;
 import static com.example.g508029.homefinancialcontrol.Constants.MMMMyyyy_DATE_FORMAT_PATTERN;
@@ -65,19 +70,21 @@ public final class TransactionHelper {
     }
 
     public static List<Instalment> getInstalmentsFromOptionsCashesSelected(double value, int instalmentQuantity, Date date, String description){
-        BigDecimal[] valueFromInstalment = new BigDecimal(value)
-                                                    .divideAndRemainder(new BigDecimal(instalmentQuantity));
+
+        BigDecimal parcela = BigDecimal.valueOf(value).divide(BigDecimal.valueOf(instalmentQuantity), 2, RoundingMode.CEILING);
+        BigDecimal ultimaParcela = BigDecimal.valueOf(value).subtract(parcela.multiply(BigDecimal.valueOf(instalmentQuantity - 1)));
 
         ArrayList<Instalment> instalments = new ArrayList<>();
 
         for (int id = 1; id <= instalmentQuantity; id++){
-            String instalmentDescription = description + "(" + id + "/" + instalmentQuantity + ")";
+            String instalmentSequence    = id + "/" + instalmentQuantity;
+            String instalmentDescription = description + "(" + instalmentSequence + ")";
             Date instalmentDate          = getDateFromInstalment(date, id - 1);
             double instalmentValue       = id == instalmentQuantity
-                                                ? valueFromInstalment[0].doubleValue() + valueFromInstalment[1].doubleValue()
-                                                : valueFromInstalment[0].doubleValue();
+                                                ? ultimaParcela.doubleValue()
+                                                : parcela.doubleValue();
 
-            instalments.add(new Instalment(id, instalmentValue, instalmentDescription, instalmentDate));
+            instalments.add(new Instalment(id, instalmentValue, instalmentDescription, instalmentSequence, instalmentDate));
         }
 
         return instalments;
@@ -110,6 +117,23 @@ public final class TransactionHelper {
         modelView.setValue(formatHelper.fromDoubleToCurrencyString(transaction.getValue()));
         modelView.setTypeSymbol(Constants.getTransactionSymbol(transaction.getType()));
         return modelView;
+    }
+
+    public static List<IntelmentModeView> toInstalmentModelViewList(List<Instalment> instalments, FormatHelper formatHelper){
+        List<IntelmentModeView> intelmentModelViews = new ArrayList<>();
+        for (Instalment instalment: instalments){
+            intelmentModelViews.add(TransactionHelper.toInstalmentModelView(instalment, formatHelper));
+        }
+        return intelmentModelViews;
+    }
+
+    public static IntelmentModeView toInstalmentModelView(Instalment instalment, FormatHelper formatHelper){
+        IntelmentModeView modeView = new IntelmentModeView();
+        modeView.setId(String.valueOf(instalment.getId()));
+        modeView.setDescription(instalment.getSequence());
+        modeView.setValue(formatHelper.fromDoubleToCurrencyString(instalment.getValue()));
+        modeView.setDate(formatHelper.fromDateToString(ddMMyyyyKma_DATE_FORMAT_PATTERN, instalment.getDate()));
+        return modeView;
     }
 
     public static List<TransactionsMonthlyModelView> toTransactionMonthlyModelViewList(List<TransactionsMonthly> transactionsMonthlies, FormatHelper formatHelper){

@@ -3,11 +3,14 @@ package com.example.g508029.homefinancialcontrol;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -18,18 +21,22 @@ import com.example.g508029.homefinancialcontrol.DB.SQLiteCategoryRepository;
 import com.example.g508029.homefinancialcontrol.DB.SQLitePaymentModeRepository;
 import com.example.g508029.homefinancialcontrol.DB.SQLiteTransactionRepository;
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
+import com.example.g508029.homefinancialcontrol.adpter.IntelmentAdapter;
+import com.example.g508029.homefinancialcontrol.model.Instalment;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.dialog.DatePickerFragment;
 import com.example.g508029.homefinancialcontrol.dialog.TimePickerFragment;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 import com.example.g508029.homefinancialcontrol.helper.TransactionHelper;
 import com.example.g508029.homefinancialcontrol.presenter.TransactionFragmentPresenter;
+import com.example.g508029.homefinancialcontrol.presenter.modelView.IntelmentModeView;
 
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static android.content.ContentValues.TAG;
 import static com.example.g508029.homefinancialcontrol.Constants.HHmm_TIME_FORMAT_PATTERN;
 import static com.example.g508029.homefinancialcontrol.Constants.ddMMyy_DATE_FORMAT_PATTERN;
 
@@ -47,6 +54,7 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     private Spinner transactionCategoriesSpinner;
     private Spinner transactionKindsSpinner;
     private Spinner optionsCashesSpinner;
+    private ListView instelmentView;
     private TransactionRepository repository;
     private TransactionFragmentPresenter presenter;
     private ArrayAdapter<String> categoriesAdapter;
@@ -55,6 +63,8 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     private ICategoryRepository categoryRepository;
     private IPaymentModeRepository paymentModeRepository;
     private Locale mLocale;
+    private IntelmentAdapter adapter;
+    private String valueOld;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +73,8 @@ public class TransactionFragment extends Fragment implements TransactionFragment
         this.getItemFromFragment(view);
         this.presenter.initialize();
         this.initializeListeners();
+
+        this.valueOld = transactionValueEditText.getText().toString();
 
         return view;
     }
@@ -128,6 +140,17 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     }
 
     @Override
+    public List<IntelmentModeView> getInstalments() {
+        return this.adapter.getAll();
+    }
+
+    @Override
+    public void setInstalments(List<IntelmentModeView> modelView) {
+        this.adapter = new IntelmentAdapter(this.getContext(), modelView);
+        this.instelmentView.setAdapter(this.adapter);
+    }
+
+    @Override
     public void setInitialDateTime() {
         this.transactionDateEditText.setText("");
         this.transactionTimeEditText.setText("");
@@ -176,6 +199,7 @@ public class TransactionFragment extends Fragment implements TransactionFragment
         this.transactionCategoriesSpinner   = view.findViewById(R.id.transaction_frag_category);
         this.transactionKindsSpinner        = view.findViewById(R.id.transaction_frag_kind);
         this.optionsCashesSpinner           = view.findViewById(R.id.transaction_frag_option_cash);
+        this.instelmentView                 = view.findViewById(R.id.transaction_fragment_option_cash_listView);
         this.transactionDateEditText        = view.findViewById(R.id.transaciton_frag_date);
         this.transactionTimeEditText        = view.findViewById(R.id.transaciton_frag_time);
         this.transactionValueEditText       = view.findViewById(R.id.transaciton_frag_value);
@@ -198,6 +222,18 @@ public class TransactionFragment extends Fragment implements TransactionFragment
         this.transactionValueEditText.addTextChangedListener(
                 new NumberTextWatcher(this.transactionValueEditText, this.formatHelper));
 
+        this.transactionValueEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    if(!valueOld.equals(getTransactionValue())){
+                        optionsCashesSpinner.setSelection(0);
+                    }
+                    valueOld = getTransactionValue();
+                }
+            }
+        });
+
         this.transactionTimeEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,6 +245,18 @@ public class TransactionFragment extends Fragment implements TransactionFragment
             @Override
             public void onClick(View v) {
                 datePickerFragment.show();
+            }
+        });
+
+        this.optionsCashesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                presenter.onOptionCashSelected();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }
