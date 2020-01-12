@@ -16,10 +16,12 @@ import com.example.g508029.homefinancialcontrol.presenter.modelView.Transactions
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static android.content.ContentValues.TAG;
 import static com.example.g508029.homefinancialcontrol.Constants.EXPENSE_DESCRIPTION;
@@ -69,7 +71,7 @@ public final class TransactionHelper {
         return number + " vezes";
     }
 
-    public static List<Instalment> getInstalmentsFromOptionsCashesSelected(double value, int instalmentQuantity, Date date, String description){
+    public static List<Instalment> getInstalmentsFromOptionsCashesSelected(double value, int instalmentQuantity, Date date, String description, String category){
 
         BigDecimal parcela = BigDecimal.valueOf(value).divide(BigDecimal.valueOf(instalmentQuantity), 2, RoundingMode.CEILING);
         BigDecimal ultimaParcela = BigDecimal.valueOf(value).subtract(parcela.multiply(BigDecimal.valueOf(instalmentQuantity - 1)));
@@ -84,7 +86,7 @@ public final class TransactionHelper {
                                                 ? ultimaParcela.doubleValue()
                                                 : parcela.doubleValue();
 
-            instalments.add(new Instalment(id, instalmentValue, instalmentDescription, instalmentSequence, instalmentDate));
+            instalments.add(new Instalment(id, instalmentValue, instalmentDescription, instalmentSequence, instalmentDate, category));
         }
 
         return instalments;
@@ -96,6 +98,29 @@ public final class TransactionHelper {
         calendar.add(calendar.MONTH, monthQuantity);
 
         return calendar.getTime();
+    }
+
+    public static List<Transaction> getTransactionsFromInstalmentViewList(Transaction transactionActual, List<IntelmentModeView> intelmentModeViews, FormatHelper formatHelper) throws ParseException {
+        List<Transaction> transactions = new ArrayList<>();
+
+            for(IntelmentModeView view : intelmentModeViews){
+                String id          = UUID.randomUUID().toString();
+                String type        = transactionActual.getType();
+                String category    = transactionActual.getCategory();
+                String paymentMode = transactionActual.getPaymentMode();
+                double value       = formatHelper.fromCurrencyStringToDouble(view.getValue());
+                Date date          = formatHelper.fromStringToDate(ddMMyyyyKma_DATE_FORMAT_PATTERN, view.getDate());
+                String description = "(" + view.getDescription() + ")";
+
+                if(transactionActual.getDescription() == null || transactionActual.getDescription().isEmpty()) {
+                    description = transactionActual.getCategory().concat(" ").concat(description);
+                } else {
+                    description = transactionActual.getDescription().concat(" ").concat(description);
+                }
+
+                transactions.add(new Transaction(id, type, description, value, date, category, paymentMode));
+            }
+        return transactions;
     }
 
     public static List<TransactionModelView> toTransactionsModelViewList(List<Transaction> transactions, FormatHelper formatHelper){

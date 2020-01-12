@@ -3,7 +3,10 @@ package com.example.g508029.homefinancialcontrol;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.g508029.homefinancialcontrol.DB.DBHelper;
@@ -64,7 +68,7 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     private IPaymentModeRepository paymentModeRepository;
     private Locale mLocale;
     private IntelmentAdapter adapter;
-    private String valueOld;
+    private EditText transactionValueEditTextTemp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,8 +77,6 @@ public class TransactionFragment extends Fragment implements TransactionFragment
         this.getItemFromFragment(view);
         this.presenter.initialize();
         this.initializeListeners();
-
-        this.valueOld = transactionValueEditText.getText().toString();
 
         return view;
     }
@@ -203,6 +205,7 @@ public class TransactionFragment extends Fragment implements TransactionFragment
         this.transactionDateEditText        = view.findViewById(R.id.transaciton_frag_date);
         this.transactionTimeEditText        = view.findViewById(R.id.transaciton_frag_time);
         this.transactionValueEditText       = view.findViewById(R.id.transaciton_frag_value);
+        this.transactionValueEditTextTemp   = view.findViewById(R.id.transaciton_frag_value);
         this.transactionAnnotationEditText  = view.findViewById(R.id.transaciton_frag_description);
         this.datePickerFragment             = new DatePickerFragment(getContext(), this.formatHelper, this.transactionDateEditText, this.mLocale);
         this.timePickerFragment             = new TimePickerFragment(getContext(), this.formatHelper, this.transactionTimeEditText, this.mLocale);
@@ -222,17 +225,7 @@ public class TransactionFragment extends Fragment implements TransactionFragment
         this.transactionValueEditText.addTextChangedListener(
                 new NumberTextWatcher(this.transactionValueEditText, this.formatHelper));
 
-        this.transactionValueEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
-                    if(!valueOld.equals(getTransactionValue())){
-                        optionsCashesSpinner.setSelection(0);
-                    }
-                    valueOld = getTransactionValue();
-                }
-            }
-        });
+        this.transactionValueEditTextTemp.addTextChangedListener(this.CreateTextWatcherToResetOptionCash());
 
         this.transactionTimeEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,9 +248,22 @@ public class TransactionFragment extends Fragment implements TransactionFragment
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
+    }
+
+    private TextWatcher CreateTextWatcherToResetOptionCash(){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                optionsCashesSpinner.setSelection(0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        };
     }
 }

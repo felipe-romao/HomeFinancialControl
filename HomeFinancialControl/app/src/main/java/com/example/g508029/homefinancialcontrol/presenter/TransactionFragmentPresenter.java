@@ -73,6 +73,7 @@ public class TransactionFragmentPresenter {
     public void onAddNewTransaction(){
         try {
             this.validateValues();
+
             String id           = UUID.randomUUID().toString();
             String type         = this.view.getTransactionType();
             String category     = this.view.getCategory();
@@ -80,9 +81,19 @@ public class TransactionFragmentPresenter {
             String description  = this.view.getDescription();
             String paymentMode  = this.view.getPaymentMode();
             Date date           = this.getDateFromView();
-
             Transaction transaction = new Transaction(id, type, description, value, date, category, paymentMode);
-            this.repository.addTransaction(transaction);
+
+            if(this.view.getOptionCashSelected() > 1) {
+                List<IntelmentModeView> intelmentModeViews = this.view.getInstalments();
+                for(Transaction transactionInstalmented : TransactionHelper.getTransactionsFromInstalmentViewList(
+                                                                                transaction,
+                                                                                intelmentModeViews,
+                                                                                this.formatHelper)){
+                    this.repository.addTransaction(transactionInstalmented);
+                }
+            } else {
+                this.repository.addTransaction(transaction);
+            }
 
             initializeValues();
             this.view.showMessage("Transação '" + transaction +"' gravada com sucesso!");
@@ -104,11 +115,13 @@ public class TransactionFragmentPresenter {
             String description = this.view.getDescription();
             double value       = this.formatHelper.fromCurrencyStringToDouble(this.view.getTransactionValue());
             Date date          = this.getDateFromView();
+            String category    = this.view.getCategory();
 
             List<Instalment> instalments = TransactionHelper.getInstalmentsFromOptionsCashesSelected(value,
                     this.view.getOptionCashSelected(),
                     date,
-                    description);
+                    description,
+                    category);
 
             this.view.setInstalments(TransactionHelper.toInstalmentModelViewList(instalments, this.formatHelper));
         } catch (Exception e) {

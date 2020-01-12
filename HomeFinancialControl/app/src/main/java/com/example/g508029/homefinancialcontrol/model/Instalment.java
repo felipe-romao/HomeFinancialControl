@@ -9,13 +9,15 @@ public class Instalment {
     private String description;
     private String sequence;
     private Date date;
+    private String category;
 
-    public Instalment(int id, double value, String description, String sequence, Date date) {
+    public Instalment(int id, double value, String description, String sequence, Date date, String category) {
         this.id = id;
         this.value = value;
         this.description = description;
         this.sequence    = sequence;
         this.date = date;
+        this.category = category;
     }
 
     public int getId() {
@@ -27,7 +29,7 @@ public class Instalment {
     }
 
     public String getDescription() {
-        return description;
+        return description + "(" + this.sequence + ")";
     }
 
     public String getSequence() {
