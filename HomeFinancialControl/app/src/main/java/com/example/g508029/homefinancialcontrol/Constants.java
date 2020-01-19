@@ -22,4 +22,7 @@ public class Constants {
         }
         return symbol;
     }
+
+    public static final String PAYMENT_MODE_FIXED_DESCRIPTION = "FIXA";
+    public static final String PAYMENT_MODE_EVENTUAL_DESCRIPTION = "EVENTUAL";
 }

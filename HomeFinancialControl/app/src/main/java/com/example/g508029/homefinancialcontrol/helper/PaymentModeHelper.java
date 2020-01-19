@@ -7,6 +7,9 @@ import com.example.g508029.homefinancialcontrol.presenter.modelView.InfoTransact
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.g508029.homefinancialcontrol.Constants.PAYMENT_MODE_EVENTUAL_DESCRIPTION;
+import static com.example.g508029.homefinancialcontrol.Constants.PAYMENT_MODE_FIXED_DESCRIPTION;
+
 public class PaymentModeHelper {
     public static List<String> getAllDescriptionFromPaymentMode(List<PaymentMode> paymentModes){
         List<String> descriptions = new ArrayList<>();
@@ -14,6 +17,13 @@ public class PaymentModeHelper {
             descriptions.add(paymentMode.getMode());
         }
         return descriptions;
+    }
+
+    public static List<String> getPaymentModeFrequencyList(){
+        List<String> frequencies = new ArrayList<>();
+        frequencies.add(PAYMENT_MODE_EVENTUAL_DESCRIPTION);
+        frequencies.add(PAYMENT_MODE_FIXED_DESCRIPTION);
+        return frequencies;
     }
 
     public static List<InfoTransactionGroupedModelView> toInfoTransatcionGroupedListModelView(List<InfoTransactionGrouped> groupedList, FormatHelper formatHelper){

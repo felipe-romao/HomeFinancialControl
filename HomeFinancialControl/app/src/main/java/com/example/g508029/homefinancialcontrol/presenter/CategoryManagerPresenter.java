@@ -20,6 +20,12 @@ public class CategoryManagerPresenter {
         Category getCategorySelected();
         void showMessage(String message);
         void clearValues();
+
+        String getID();
+        void setID(String id);
+        void setTransactionType(String transactionType);
+        void setDescription(String description);
+        void setOperationType(String operationType);
     }
 
     private ICategoryManagerView view;
@@ -47,9 +53,6 @@ public class CategoryManagerPresenter {
             String description = this.view.getDescription();
             String transactionType = this.view.getTransactionTypeSelected();
 
-            Log.d(TAG, "onAddedCategory: id " + id);
-            Log.d(TAG, "onAddedCategory: desc " + description);
-            Log.d(TAG, "onAddedCategory: type " + transactionType);
             Category category = new Category(id, description, transactionType);
             this.repository.addCategory(category);
 
@@ -59,6 +62,37 @@ public class CategoryManagerPresenter {
         } catch (Exception ex){
             this.view.showMessage("Ocorreu um erro ao tentar adicionar: " + ex.getMessage());
         }
+    }
+
+    public void onUpdatedCategory(){
+        try {
+            this.validateValues();
+
+            String id = this.view.getID();
+            String description = this.view.getDescription();
+            String transactionType = this.view.getTransactionTypeSelected();
+
+            Category category = new Category(id, description, transactionType);
+            this.repository.updateCategory(category);
+
+            this.view.clearValues();
+            this.view.showMessage("Categoria atualizada com sucesso!");
+
+        } catch (Exception ex){
+            this.view.showMessage("Ocorreu um erro ao tentar atualizar: " + ex.getMessage());
+        }
+    }
+
+
+    public void onSelectCategoryToUpdated(){
+        Category category = this.view.getCategorySelected();
+        if(category == null)
+            return;
+
+        this.view.setID(category.getId());
+        this.view.setDescription(category.getDescription());
+        this.view.setTransactionType(category.getTypeMovement());
+        this.view.setOperationType("Atualizar");
     }
 
     public void onGetAllCategories(){

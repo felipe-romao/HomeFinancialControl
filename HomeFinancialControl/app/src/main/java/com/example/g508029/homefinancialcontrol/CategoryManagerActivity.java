@@ -2,6 +2,7 @@ package com.example.g508029.homefinancialcontrol;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import java.util.List;
 
 public class CategoryManagerActivity extends HomeActivity implements ICategoryManagerView{
 
+    private static final String TAG = "tag";
     private EditText descriptionEditText;
     private ListView categoryListView;
     private Button categoryAddButton;
@@ -33,6 +35,8 @@ public class CategoryManagerActivity extends HomeActivity implements ICategoryMa
     private ArrayAdapter<String> transactionTypeAdpter;
     private ArrayAdapter<Category> categoryAdapter;
     private Category categorySelected;
+    private String operationType;
+    private String transactionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,7 @@ public class CategoryManagerActivity extends HomeActivity implements ICategoryMa
 
     @Override
     public void setCategories(List<Category> categories) {
-        categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categories);
+        this.categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categories);
         this.categoryListView.setAdapter(categoryAdapter);
     }
 
@@ -78,14 +82,55 @@ public class CategoryManagerActivity extends HomeActivity implements ICategoryMa
     }
 
     @Override
+    public String getID(){
+        return this.transactionId;
+    }
+
+    @Override
     public void clearValues() {
         this.descriptionEditText.setText("");
+        this.transactionId = "";
+        this.transactionTypeSpinner.setSelection(0);
+        this.operationType = "Adicionar";
+    }
+
+    @Override
+    public void setID(String id) {
+        this.transactionId = id;
+    }
+
+    @Override
+    public void setTransactionType(String transactionType) {
+        int position = this.transactionTypeAdpter.getPosition(transactionType);
+        Log.d(TAG, "setTransactionType: position: " + position);
+
+        this.transactionTypeSpinner.setSelection(position);
+    }
+
+    @Override
+    public void setDescription(String description) {
+        this.descriptionEditText.setText(description);
+    }
+
+    @Override
+    public void setOperationType(String operationType) {
+        this.operationType = operationType;
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         this.categorySelected = categoryAdapter.getItem(info.position);
+
+        MenuItem update = menu.add("Atualizar");
+        update.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                presenter.onSelectCategoryToUpdated();
+                return false;
+            }
+        });
 
         MenuItem delete = menu.add("Deletar");
         delete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -110,7 +155,11 @@ public class CategoryManagerActivity extends HomeActivity implements ICategoryMa
         this.categoryAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onAddedCategory();
+                if(operationType.equals("Atualizar")){
+                    presenter.onUpdatedCategory();
+                } else {
+                    presenter.onAddedCategory();
+                }
                 presenter.onGetAllCategories();
             }
         });

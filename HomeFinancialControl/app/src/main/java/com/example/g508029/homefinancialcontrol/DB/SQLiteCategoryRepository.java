@@ -32,6 +32,12 @@ public class SQLiteCategoryRepository implements ICategoryRepository {
         db.insert(TABLE_NAME, null, values);
     }
 
+    public void updateCategory(Category category) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = getContentValues(category);
+        db.update(TABLE_NAME, values, "id=?", new String[]{category.getId()});
+    }
+
     @Override
     public List<Category> getAll() {
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
