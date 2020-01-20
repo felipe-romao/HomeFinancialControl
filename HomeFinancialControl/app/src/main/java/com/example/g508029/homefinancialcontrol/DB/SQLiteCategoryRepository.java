@@ -57,6 +57,8 @@ public class SQLiteCategoryRepository implements ICategoryRepository {
         values.put("id", category.getId());
         values.put("description", category.getDescription());
         values.put("movement_type", category.getTypeMovement());
+        values.put("frequency", category.getFrequency());
+
         return values;
     }
 
@@ -64,9 +66,10 @@ public class SQLiteCategoryRepository implements ICategoryRepository {
         List<Category> categories = new ArrayList<>();
         while (cursor.moveToNext()){
             String id = cursor.getString(cursor.getColumnIndex("id"));
-            String description = cursor.getString(cursor.getColumnIndex("description"));
+            String description  = cursor.getString(cursor.getColumnIndex("description"));
             String movementType = cursor.getString(cursor.getColumnIndex("movement_type"));
-            Category category = new Category(id, description, movementType);
+            String frequency    = cursor.getString(cursor.getColumnIndex("frequency"));
+            Category category   = new Category(id, description, movementType, frequency);
             categories.add(category);
         }
         return categories;

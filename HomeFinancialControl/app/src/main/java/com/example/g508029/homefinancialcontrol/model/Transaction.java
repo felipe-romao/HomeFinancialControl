@@ -12,6 +12,7 @@ public class Transaction implements Serializable {
     private double value;
     private Date date;
     private String category;
+    private String frequency;
     private String paymentMode;
 
     public Transaction(String type){
@@ -80,6 +81,14 @@ public class Transaction implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
     }
 
     public String getPaymentMode() {

@@ -4,11 +4,13 @@ public class Category {
     private String id;
     private String description;
     private String typeMovement;
+    private String frequency;
 
-    public Category(String id, String description, String typeMovement){
+    public Category(String id, String description, String typeMovement, String frequency){
         this.id             = id;
         this.description    = description;
         this.typeMovement   = typeMovement;
+        this.frequency      = frequency;
     }
 
     public String getId() {
@@ -33,6 +35,14 @@ public class Category {
 
     public void setTypeMovement(String typeMovement) {
         this.typeMovement = typeMovement;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
     }
 
     @Override

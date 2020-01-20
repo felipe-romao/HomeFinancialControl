@@ -149,6 +149,7 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         values.put("value", transaction.getValue());
         values.put("date", transaction.getDate().getTime());
         values.put("category", transaction.getCategory());
+        values.put("frequency", transaction.getFrequency());
         values.put("payment_mode", transaction.getPaymentMode());
         values.put("description", transaction.getDescription());
         return values;
@@ -165,6 +166,7 @@ public class SQLiteTransactionRepository implements TransactionRepository{
             transaction.setId(cursor.getString(cursor.getColumnIndex("id")));
             transaction.setValue(cursor.getDouble(cursor.getColumnIndex("value")));
             transaction.setCategory(cursor.getString(cursor.getColumnIndex("category")));
+            transaction.setFrequency(cursor.getString(cursor.getColumnIndex("frequency")));
             transaction.setDescription(cursor.getString(cursor.getColumnIndex("description")));
             transaction.setPaymentMode(cursor.getString(cursor.getColumnIndex("payment_mode")));
             transactions.add(transaction);
