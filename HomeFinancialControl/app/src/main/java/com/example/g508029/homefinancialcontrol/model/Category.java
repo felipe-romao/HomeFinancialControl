@@ -47,6 +47,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return "[ " + this.getTypeMovement() + " ]   " + this.getDescription();
+        return this.getDescription();
     }
 }

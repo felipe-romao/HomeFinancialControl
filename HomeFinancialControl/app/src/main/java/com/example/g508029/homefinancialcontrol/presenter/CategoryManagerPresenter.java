@@ -2,7 +2,10 @@ package com.example.g508029.homefinancialcontrol.presenter;
 
 import android.util.Log;
 
+import com.example.g508029.homefinancialcontrol.Constants;
 import com.example.g508029.homefinancialcontrol.DB.ICategoryRepository;
+import com.example.g508029.homefinancialcontrol.helper.CategoryHelper;
+import com.example.g508029.homefinancialcontrol.helper.PaymentModeHelper;
 import com.example.g508029.homefinancialcontrol.helper.TransactionHelper;
 import com.example.g508029.homefinancialcontrol.model.Category;
 
@@ -26,6 +29,10 @@ public class CategoryManagerPresenter {
         void setTransactionType(String transactionType);
         void setDescription(String description);
         void setOperationType(String operationType);
+
+        void setFrequencyTypes(List<String> frequencyTypes);
+        void setFrequency(String frequency);
+        String getFrequency();
     }
 
     private ICategoryManagerView view;
@@ -39,6 +46,8 @@ public class CategoryManagerPresenter {
     public void initialize(){
         try {
             this.view.setTransactionTypes(TransactionHelper.getTransactionTypes());
+            this.view.setFrequencyTypes(PaymentModeHelper.getPaymentModeFrequencyList());
+            this.view.setOperationType("Adicionar");
             this.onGetAllCategories();
         } catch (Exception ex){
             this.view.showMessage("Ocorreu um erro ao tentar inicializar: " + ex.getMessage());
@@ -52,8 +61,9 @@ public class CategoryManagerPresenter {
             String id = UUID.randomUUID().toString();
             String description = this.view.getDescription();
             String transactionType = this.view.getTransactionTypeSelected();
+            String frequency = this.view.getFrequency();
 
-            Category category = new Category(id, description, transactionType);
+            Category category = new Category(id, description, transactionType, frequency);
             this.repository.addCategory(category);
 
             this.view.clearValues();
@@ -71,8 +81,9 @@ public class CategoryManagerPresenter {
             String id = this.view.getID();
             String description = this.view.getDescription();
             String transactionType = this.view.getTransactionTypeSelected();
+            String frequency = this.view.getFrequency();
 
-            Category category = new Category(id, description, transactionType);
+            Category category = new Category(id, description, transactionType, frequency);
             this.repository.updateCategory(category);
 
             this.view.clearValues();
@@ -92,6 +103,7 @@ public class CategoryManagerPresenter {
         this.view.setID(category.getId());
         this.view.setDescription(category.getDescription());
         this.view.setTransactionType(category.getTypeMovement());
+        this.view.setFrequency(category.getFrequency());
         this.view.setOperationType("Atualizar");
     }
 

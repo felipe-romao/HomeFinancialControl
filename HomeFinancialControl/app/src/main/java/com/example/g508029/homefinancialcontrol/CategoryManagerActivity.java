@@ -30,9 +30,11 @@ public class CategoryManagerActivity extends HomeActivity implements ICategoryMa
     private ListView categoryListView;
     private Button categoryAddButton;
     private Spinner transactionTypeSpinner;
+    private Spinner frequencySpinner;
     private ICategoryRepository repository;
     private CategoryManagerPresenter presenter;
     private ArrayAdapter<String> transactionTypeAdpter;
+    private ArrayAdapter<String> frequencyAdpter;
     private ArrayAdapter<Category> categoryAdapter;
     private Category categorySelected;
     private String operationType;
@@ -91,6 +93,7 @@ public class CategoryManagerActivity extends HomeActivity implements ICategoryMa
         this.descriptionEditText.setText("");
         this.transactionId = "";
         this.transactionTypeSpinner.setSelection(0);
+        this.frequencySpinner.setSelection(0);
         this.operationType = "Adicionar";
     }
 
@@ -102,8 +105,6 @@ public class CategoryManagerActivity extends HomeActivity implements ICategoryMa
     @Override
     public void setTransactionType(String transactionType) {
         int position = this.transactionTypeAdpter.getPosition(transactionType);
-        Log.d(TAG, "setTransactionType: position: " + position);
-
         this.transactionTypeSpinner.setSelection(position);
     }
 
@@ -115,6 +116,23 @@ public class CategoryManagerActivity extends HomeActivity implements ICategoryMa
     @Override
     public void setOperationType(String operationType) {
         this.operationType = operationType;
+    }
+
+    @Override
+    public void setFrequencyTypes(List<String> frequencyTypes) {
+        this.frequencyAdpter = getArrayAdpter(frequencyTypes);
+        this.frequencySpinner.setAdapter(this.frequencyAdpter);
+    }
+
+    @Override
+    public void setFrequency(String frequency) {
+        int position = this.frequencyAdpter.getPosition(frequency);
+        this.frequencySpinner.setSelection(position);
+    }
+
+    @Override
+    public String getFrequency() {
+        return this.frequencyAdpter.getItem(this.frequencySpinner.getSelectedItemPosition());
     }
 
     @Override
@@ -176,5 +194,6 @@ public class CategoryManagerActivity extends HomeActivity implements ICategoryMa
         this.categoryListView = findViewById(R.id.category_manager_listview);
         this.categoryAddButton = findViewById(R.id.category_manager_add_button);
         this.transactionTypeSpinner = findViewById(R.id.category_manager_transaction_type_spinner);
+        this.frequencySpinner = findViewById(R.id.category_manager_frequency_spinner);
     }
 }
