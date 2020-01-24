@@ -25,7 +25,7 @@ public class Transaction implements Serializable {
         this.paymentMode    = "";
     }
 
-    public Transaction(String id, String type, String description, double value, Date date, String category, String paymentMode){
+    public Transaction(String id, String type, String description, double value, Date date, String category, String paymentMode, String frequency){
         this.id             = id;
         this.type           = type;
         this.description    = description;
@@ -33,6 +33,7 @@ public class Transaction implements Serializable {
         this.date           = date;
         this.category       = category;
         this.paymentMode    = paymentMode;
+        this.frequency      = frequency;
     }
 
     public String getId() {

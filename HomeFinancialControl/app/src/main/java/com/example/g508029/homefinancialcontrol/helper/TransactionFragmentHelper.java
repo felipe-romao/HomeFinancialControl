@@ -61,7 +61,7 @@ public class TransactionFragmentHelper {
         String description      = this.transactionAnnotationEditText.getText().toString();
         String paymentMode      = this.transactionKindsSpinner.getSelectedItem().toString();
 
-        this.transaction = new Transaction(UUID.randomUUID().toString(),type,description,value,date,category,paymentMode);
+        this.transaction = new Transaction(UUID.randomUUID().toString(),type,description,value,date,category,paymentMode, "");
         return this.transaction;
     }
 

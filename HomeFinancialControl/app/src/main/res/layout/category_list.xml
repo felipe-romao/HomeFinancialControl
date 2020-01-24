@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+        <TableRow>
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center|left"
+                android:text="Movimento: "
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/category_movement_type_textView"
+                android:layout_height="wrap_content"
+                android:layout_weight="4.5"
+                android:textSize="10sp"
+                android:gravity="center|left"
+                android:text="RECEITA" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textSize="10sp"
+                android:gravity="center|left"
+                android:text="Frequência: " />
+            <TextView
+                android:id="@+id/category_frequency_textView"
+                android:layout_height="wrap_content"
+                android:layout_weight="4.5"
+                android:textSize="10sp"
+                android:gravity="center|left"
+                android:text="FIXA" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="0.23"
+                android:textSize="12sp"
+                android:gravity="center|left"
+                android:text="Descrição: " />
+            <TextView
+                android:id="@+id/category_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6.5"
+                android:textSize="12sp"
+                android:gravity="center|left"
+                android:text="Salário" />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

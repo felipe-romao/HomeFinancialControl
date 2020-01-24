@@ -1,12 +1,9 @@
 package com.example.g508029.homefinancialcontrol;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.g508029.homefinancialcontrol.DB.DBHelper;
@@ -26,23 +22,15 @@ import com.example.g508029.homefinancialcontrol.DB.SQLitePaymentModeRepository;
 import com.example.g508029.homefinancialcontrol.DB.SQLiteTransactionRepository;
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
 import com.example.g508029.homefinancialcontrol.adpter.IntelmentAdapter;
-import com.example.g508029.homefinancialcontrol.model.Instalment;
-import com.example.g508029.homefinancialcontrol.model.Transaction;
+import com.example.g508029.homefinancialcontrol.model.Category;
 import com.example.g508029.homefinancialcontrol.dialog.DatePickerFragment;
 import com.example.g508029.homefinancialcontrol.dialog.TimePickerFragment;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
-import com.example.g508029.homefinancialcontrol.helper.TransactionHelper;
 import com.example.g508029.homefinancialcontrol.presenter.TransactionFragmentPresenter;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.IntelmentModeView;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
-import static com.example.g508029.homefinancialcontrol.Constants.HHmm_TIME_FORMAT_PATTERN;
-import static com.example.g508029.homefinancialcontrol.Constants.ddMMyy_DATE_FORMAT_PATTERN;
 
 public class TransactionFragment extends Fragment implements TransactionFragmentPresenter.ITransactionFragmentView{
 
@@ -61,7 +49,7 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     private ListView instelmentView;
     private TransactionRepository repository;
     private TransactionFragmentPresenter presenter;
-    private ArrayAdapter<String> categoriesAdapter;
+    private ArrayAdapter<Category> categoriesAdapter;
     private ArrayAdapter<String> kindsAdapter;
     private ArrayAdapter<String> optionsCashesAdapter;
     private ICategoryRepository categoryRepository;
@@ -102,7 +90,7 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     }
 
     @Override
-    public String getCategory() {
+    public Category getCategory() {
         return this.categoriesAdapter.getItem(this.transactionCategoriesSpinner.getSelectedItemPosition());
     }
 
@@ -167,8 +155,9 @@ public class TransactionFragment extends Fragment implements TransactionFragment
     }
 
     @Override
-    public void setCategories(List<String> categories) {
-        this.categoriesAdapter = getArrayAdpter(categories);
+    public void setCategories(List<Category> categories) {
+        this.categoriesAdapter = new ArrayAdapter<Category>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, categories);
+        categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         this.transactionCategoriesSpinner.setAdapter(categoriesAdapter);
     }
 

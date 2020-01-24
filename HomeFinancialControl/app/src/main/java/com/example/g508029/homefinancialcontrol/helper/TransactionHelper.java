@@ -47,6 +47,16 @@ public final class TransactionHelper {
         return categories;
     }
 
+    public static List<Category> getTransactionCategories(String transactionType, ICategoryRepository repository){
+        ArrayList<Category> categories = new ArrayList<>();
+        for (Category category: repository.getAll()){
+            if(category.getTypeMovement().equals(transactionType)){
+                categories.add(category);
+            }
+        }
+        return categories;
+    }
+
     public static List<String> getTransactionKind(IPaymentModeRepository repository){
         ArrayList<String> kinds = new ArrayList<>();
         for (PaymentMode paymentMode: repository.getAll()){
@@ -107,6 +117,7 @@ public final class TransactionHelper {
                 String id          = UUID.randomUUID().toString();
                 String type        = transactionActual.getType();
                 String category    = transactionActual.getCategory();
+                String frequency   = transactionActual.getFrequency();
                 String paymentMode = transactionActual.getPaymentMode();
                 double value       = formatHelper.fromCurrencyStringToDouble(view.getValue());
                 Date date          = formatHelper.fromStringToDate(ddMMyyyyKma_DATE_FORMAT_PATTERN, view.getDate());
@@ -118,7 +129,7 @@ public final class TransactionHelper {
                     description = transactionActual.getDescription().concat(" ").concat(description);
                 }
 
-                transactions.add(new Transaction(id, type, description, value, date, category, paymentMode));
+                transactions.add(new Transaction(id, type, description, value, date, category, paymentMode, frequency));
             }
         return transactions;
     }

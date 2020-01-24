@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.g508029.homefinancialcontrol.DB.ICategoryRepository;
 import com.example.g508029.homefinancialcontrol.DB.SQLiteCategoryRepository;
+import com.example.g508029.homefinancialcontrol.adpter.CategoryManagerAdapter;
 import com.example.g508029.homefinancialcontrol.model.Category;
 import com.example.g508029.homefinancialcontrol.presenter.CategoryManagerPresenter;
 import com.example.g508029.homefinancialcontrol.presenter.CategoryManagerPresenter.ICategoryManagerView;
@@ -35,7 +36,7 @@ public class CategoryManagerActivity extends HomeActivity implements ICategoryMa
     private CategoryManagerPresenter presenter;
     private ArrayAdapter<String> transactionTypeAdpter;
     private ArrayAdapter<String> frequencyAdpter;
-    private ArrayAdapter<Category> categoryAdapter;
+    private CategoryManagerAdapter categoryAdapter;
     private Category categorySelected;
     private String operationType;
     private String transactionId;
@@ -69,7 +70,7 @@ public class CategoryManagerActivity extends HomeActivity implements ICategoryMa
 
     @Override
     public void setCategories(List<Category> categories) {
-        this.categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categories);
+        this.categoryAdapter = new CategoryManagerAdapter(this, categories);
         this.categoryListView.setAdapter(categoryAdapter);
     }
 

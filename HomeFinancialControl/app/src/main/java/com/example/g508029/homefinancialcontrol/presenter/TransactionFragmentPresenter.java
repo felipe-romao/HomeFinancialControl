@@ -7,6 +7,7 @@ import com.example.g508029.homefinancialcontrol.DB.IPaymentModeRepository;
 import com.example.g508029.homefinancialcontrol.DB.TransactionRepository;
 import com.example.g508029.homefinancialcontrol.helper.FormatHelper;
 import com.example.g508029.homefinancialcontrol.helper.TransactionHelper;
+import com.example.g508029.homefinancialcontrol.model.Category;
 import com.example.g508029.homefinancialcontrol.model.Instalment;
 import com.example.g508029.homefinancialcontrol.model.Transaction;
 import com.example.g508029.homefinancialcontrol.presenter.modelView.IntelmentModeView;
@@ -24,7 +25,7 @@ import static com.example.g508029.homefinancialcontrol.Constants.ddMMyy_DATE_FOR
 
 public class TransactionFragmentPresenter {
     public interface ITransactionFragmentView{
-        String getCategory();
+        Category getCategory();
         String getTransactionValue();
         String getDescription();
         String getPaymentMode();
@@ -36,7 +37,7 @@ public class TransactionFragmentPresenter {
         void setInstalments(List<IntelmentModeView> modelView);
         void setInitialDateTime();
         void setTransactionValue(String value);
-        void setCategories(List<String> categories);
+        void setCategories(List<Category> categories);
         void setPaymentModes(List<String> paymentModes);
         void setOptionsCashes(List<String> optionsCashes);
         void showMessage(String message);
@@ -58,7 +59,7 @@ public class TransactionFragmentPresenter {
 
     public void initialize(){
         try {
-            List<String> transactionCategories = TransactionHelper.getTransactionCategory(this.view.getTransactionType(), this.categoryRepository);
+            List<Category> transactionCategories = TransactionHelper.getTransactionCategories(this.view.getTransactionType(), this.categoryRepository);
             List<String> transactionPaymentModes = TransactionHelper.getTransactionKind(this.paymentModeRepository);
             this.view.setCategories(transactionCategories);
             this.view.setPaymentModes(transactionPaymentModes);
@@ -76,12 +77,12 @@ public class TransactionFragmentPresenter {
 
             String id           = UUID.randomUUID().toString();
             String type         = this.view.getTransactionType();
-            String category     = this.view.getCategory();
+            Category category   = this.view.getCategory();
             double value        = this.formatHelper.fromCurrencyStringToDouble(this.view.getTransactionValue());
             String description  = this.view.getDescription();
             String paymentMode  = this.view.getPaymentMode();
             Date date           = this.getDateFromView();
-            Transaction transaction = new Transaction(id, type, description, value, date, category, paymentMode);
+            Transaction transaction = new Transaction(id, type, description, value, date, category.getDescription(), paymentMode, category.getFrequency());
 
             if(this.view.getOptionCashSelected() > 1) {
                 List<IntelmentModeView> intelmentModeViews = this.view.getInstalments();
@@ -115,13 +116,13 @@ public class TransactionFragmentPresenter {
             String description = this.view.getDescription();
             double value       = this.formatHelper.fromCurrencyStringToDouble(this.view.getTransactionValue());
             Date date          = this.getDateFromView();
-            String category    = this.view.getCategory();
+            Category category  = this.view.getCategory();
 
             List<Instalment> instalments = TransactionHelper.getInstalmentsFromOptionsCashesSelected(value,
                     this.view.getOptionCashSelected(),
                     date,
                     description,
-                    category);
+                    category.getDescription());
 
             this.view.setInstalments(TransactionHelper.toInstalmentModelViewList(instalments, this.formatHelper));
         } catch (Exception e) {
@@ -137,7 +138,7 @@ public class TransactionFragmentPresenter {
     private void validateValues(){
         if(this.view.getTransactionType() == null || this.view.getTransactionType().isEmpty())
             throw new RuntimeException("informe um tipo de transação.");
-        if(this.view.getCategory() == null || this.view.getCategory().isEmpty())
+        if(this.view.getCategory() == null || this.view.getCategory().getDescription().isEmpty())
             throw new RuntimeException("selecione uma categoria.");
         if(this.view.getPaymentMode() == null || this.view.getPaymentMode().isEmpty())
             throw new RuntimeException("selecione um modo de pagamento ou recebimento.");
