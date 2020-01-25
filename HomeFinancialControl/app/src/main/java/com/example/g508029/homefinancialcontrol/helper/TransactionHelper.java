@@ -152,6 +152,8 @@ public final class TransactionHelper {
         modelView.setType(transaction.getType());
         modelView.setValue(formatHelper.fromDoubleToCurrencyString(transaction.getValue()));
         modelView.setTypeSymbol(Constants.getTransactionSymbol(transaction.getType()));
+        modelView.setFrequency(transaction.getFrequency() == null || transaction.getFrequency().isEmpty()
+                                                            ? "" : Character.toString(transaction.getFrequency().charAt(0)));
         return modelView;
     }
 

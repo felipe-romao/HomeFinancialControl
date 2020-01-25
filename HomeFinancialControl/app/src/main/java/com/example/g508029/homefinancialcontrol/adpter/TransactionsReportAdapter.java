@@ -51,6 +51,7 @@ public class TransactionsReportAdapter extends BaseAdapter{
         TextView paymentModeTextView = view.findViewById(R.id.transctions_list_payment_mode_textView);
         TextView typeSymbolTextView = view.findViewById(R.id.transctions_list_type_symbol_textView);
         TextView valueTextView = view.findViewById(R.id.transctions_list_value_textView);
+        TextView frequencyTextView = view.findViewById(R.id.transctions_list_frequency_textView);
 
         categoryTextView.setText(modelView.getCategory());
         dateTextView.setText(modelView.getDate());
@@ -58,6 +59,7 @@ public class TransactionsReportAdapter extends BaseAdapter{
         paymentModeTextView.setText(modelView.getPaymentMode());
         typeSymbolTextView.setText(modelView.getTypeSymbol());
         valueTextView.setText(modelView.getValue());
+        frequencyTextView.setText(modelView.getFrequency());
 
         return view;
     }

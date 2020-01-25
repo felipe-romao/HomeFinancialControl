@@ -65,9 +65,10 @@ public class FileExternalService implements IExternalService {
                     this.populateRow(detailRow, c, 0, formatHelper.fromDateToString(ddMMyyyyKma_DATE_FORMAT_PATTERN,transaction.getDate()));
                     this.populateRow(detailRow, c, 1, transaction.getType());
                     this.populateRow(detailRow, c, 2, transaction.getCategory());
-                    this.populateRow(detailRow, c, 3, transaction.getPaymentMode());
-                    this.populateRow(detailRow, c, 4, formatHelper.fromDoubleToCurrencyString(transaction.getValue()));
-                    this.populateRow(detailRow, c, 5, transaction.getDescription());
+                    this.populateRow(detailRow, c, 3, transaction.getFrequency());
+                    this.populateRow(detailRow, c, 4, transaction.getPaymentMode());
+                    this.populateRow(detailRow, c, 5, formatHelper.fromDoubleToCurrencyString(transaction.getValue()));
+                    this.populateRow(detailRow, c, 6, transaction.getDescription());
                     pos++;
                 }
             }
@@ -93,9 +94,10 @@ public class FileExternalService implements IExternalService {
         headerValues.put(0, "Data");
         headerValues.put(1, "Tipo");
         headerValues.put(2, "Categoria");
-        headerValues.put(3, "Pagamento");
-        headerValues.put(4, "Valor");
-        headerValues.put(5, "Descrição");
+        headerValues.put(3, "Frequencia");
+        headerValues.put(4, "Pagamento");
+        headerValues.put(5, "Valor");
+        headerValues.put(6, "Descrição");
         return headerValues;
     }
 }

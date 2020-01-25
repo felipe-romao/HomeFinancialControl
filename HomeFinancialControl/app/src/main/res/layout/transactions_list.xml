@@ -25,7 +25,15 @@
                 android:textSize="8sp"
                 android:gravity="center|right"
                 android:text="Conta corrente" />
-            <TextView android:layout_weight="0.5"/>
+            <TextView
+                android:id="@+id/transctions_list_frequency_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:gravity="right"
+                android:text="E" />
         </TableRow>
         <TableRow>
             <TextView

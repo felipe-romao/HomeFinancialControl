@@ -152,6 +152,7 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         values.put("frequency", transaction.getFrequency());
         values.put("payment_mode", transaction.getPaymentMode());
         values.put("description", transaction.getDescription());
+
         return values;
     }
 

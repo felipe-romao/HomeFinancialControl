@@ -11,6 +11,7 @@ public class TransactionModelView implements Serializable {
     private String value;
     private String type;
     private String typeSymbol;
+    private String frequency;
 
     public String getId() {
         return id;
@@ -74,5 +75,13 @@ public class TransactionModelView implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
     }
 }
