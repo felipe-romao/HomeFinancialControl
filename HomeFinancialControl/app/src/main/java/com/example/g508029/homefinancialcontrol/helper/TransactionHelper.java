@@ -28,6 +28,7 @@ import static com.example.g508029.homefinancialcontrol.Constants.EXPENSE_DESCRIP
 import static com.example.g508029.homefinancialcontrol.Constants.INCOME_DESCRIPTION;
 import static com.example.g508029.homefinancialcontrol.Constants.MMMMyyyy_DATE_FORMAT_PATTERN;
 import static com.example.g508029.homefinancialcontrol.Constants.ddMMyyyyKma_DATE_FORMAT_PATTERN;
+import static com.example.g508029.homefinancialcontrol.Constants.ddMMyyyykkmm_DATE_FORMAT_PATTERN;
 
 public final class TransactionHelper {
     public static List<String> getTransactionTypes(){
@@ -120,7 +121,7 @@ public final class TransactionHelper {
                 String frequency   = transactionActual.getFrequency();
                 String paymentMode = transactionActual.getPaymentMode();
                 double value       = formatHelper.fromCurrencyStringToDouble(view.getValue());
-                Date date          = formatHelper.fromStringToDate(ddMMyyyyKma_DATE_FORMAT_PATTERN, view.getDate());
+                Date date          = formatHelper.fromStringToDate(ddMMyyyykkmm_DATE_FORMAT_PATTERN, view.getDate());
                 String description = "(" + view.getDescription() + ")";
 
                 if(transactionActual.getDescription() == null || transactionActual.getDescription().isEmpty()) {
@@ -145,7 +146,7 @@ public final class TransactionHelper {
     public static TransactionModelView toTransactionModelView(Transaction transaction, FormatHelper formatHelper){
         TransactionModelView modelView = new TransactionModelView();
         modelView.setId(transaction.getId());
-        modelView.setDate(formatHelper.fromDateToString(ddMMyyyyKma_DATE_FORMAT_PATTERN, transaction.getDate()));
+        modelView.setDate(formatHelper.fromDateToString(ddMMyyyykkmm_DATE_FORMAT_PATTERN, transaction.getDate()));
         modelView.setDescription(transaction.getDescription());
         modelView.setPaymentMode(transaction.getPaymentMode());
         modelView.setCategory(transaction.getCategory());
