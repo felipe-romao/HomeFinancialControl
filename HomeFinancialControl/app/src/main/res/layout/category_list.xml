@@ -11,36 +11,41 @@
         <TableRow>
 
             <TextView
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.7"
                 android:gravity="center|left"
                 android:text="Movimento: "
-                android:textSize="10sp" />
+                android:textSize="12sp" />
             <TextView
                 android:id="@+id/category_movement_type_textView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4.5"
-                android:textSize="10sp"
+                android:layout_weight="2.8"
+                android:textSize="12sp"
                 android:gravity="center|left"
                 android:text="RECEITA" />
             <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:textSize="10sp"
+                android:layout_weight="1.7"
+                android:textSize="12sp"
                 android:gravity="center|left"
                 android:text="Frequência: " />
             <TextView
                 android:id="@+id/category_frequency_textView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4.5"
-                android:textSize="10sp"
+                android:layout_weight="2.8"
+                android:textSize="12sp"
                 android:gravity="center|left"
                 android:text="FIXA" />
         </TableRow>
         <TableRow>
             <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.23"
+                android:layout_weight="1.7"
                 android:textSize="12sp"
                 android:gravity="center|left"
                 android:text="Descrição: " />
@@ -48,8 +53,8 @@
                 android:id="@+id/category_textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6.5"
-                android:textSize="12sp"
+                android:layout_weight="8.3"
+                android:textSize="14sp"
                 android:gravity="center|left"
                 android:text="Salário" />
         </TableRow>
