@@ -28,7 +28,8 @@ public class TransactionManagerActivity extends HomeActivity {
         Intent intent = getIntent();
         transactionTypeSelected = intent.getStringExtra("TRANSCATION_TYPE_SELECTED");
         this.createTabLayouts();
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        this.getWindow()
+                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override

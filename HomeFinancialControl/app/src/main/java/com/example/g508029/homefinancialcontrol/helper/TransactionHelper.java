@@ -23,11 +23,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static android.content.ContentValues.TAG;
 import static com.example.g508029.homefinancialcontrol.Constants.EXPENSE_DESCRIPTION;
 import static com.example.g508029.homefinancialcontrol.Constants.INCOME_DESCRIPTION;
 import static com.example.g508029.homefinancialcontrol.Constants.MMMMyyyy_DATE_FORMAT_PATTERN;
-import static com.example.g508029.homefinancialcontrol.Constants.ddMMyyyyKma_DATE_FORMAT_PATTERN;
 import static com.example.g508029.homefinancialcontrol.Constants.ddMMyyyykkmm_DATE_FORMAT_PATTERN;
 
 public final class TransactionHelper {
@@ -171,7 +169,7 @@ public final class TransactionHelper {
         modeView.setId(String.valueOf(instalment.getId()));
         modeView.setDescription(instalment.getSequence());
         modeView.setValue(formatHelper.fromDoubleToCurrencyString(instalment.getValue()));
-        modeView.setDate(formatHelper.fromDateToString(ddMMyyyyKma_DATE_FORMAT_PATTERN, instalment.getDate()));
+        modeView.setDate(formatHelper.fromDateToString(ddMMyyyykkmm_DATE_FORMAT_PATTERN, instalment.getDate()));
         return modeView;
     }
 
