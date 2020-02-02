@@ -53,9 +53,9 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         String monthFormatted = String.format("%02d", month);
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " +
-                "strftime('%m', date / 1000, 'unixepoch') = ? " +
+                "strftime('%m', date / 1000, 'unixepoch', 'localtime') = ? " +
                 "and " +
-                "strftime('%Y', date / 1000, 'unixepoch') = ? order by date DESC;";
+                "strftime('%Y', date / 1000, 'unixepoch', 'localtime') = ? order by date DESC;";
         String[] args = new String[]{monthFormatted, String.valueOf(year)};
         Cursor cursor = db.rawQuery(sql, args);
         return populateTransactions(cursor);
@@ -66,9 +66,9 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         String monthFormatted = String.format("%02d", month);
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " +
-                "strftime('%m', date / 1000, 'unixepoch') = ? " +
+                "strftime('%m', date / 1000, 'unixepoch', 'localtime') = ? " +
                 "and " +
-                "strftime('%Y', date / 1000, 'unixepoch') = ? " +
+                "strftime('%Y', date / 1000, 'unixepoch', 'localtime') = ? " +
                 "and type = ? order by date DESC;";
         String[] args = new String[]{monthFormatted, String.valueOf(year), type};
         Cursor cursor = db.rawQuery(sql, args);
@@ -97,8 +97,8 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         String sql = "select payment_mode, count(id) as quantity, " +
                 "sum(case type when 'DESPESA' then -(value) " +
                         "else value end) as total  from " + TABLE_NAME +
-                " where strftime('%m', date / 1000, 'unixepoch') = ? and " +
-                "strftime('%Y', date / 1000, 'unixepoch') = ? " +
+                " where strftime('%m', date / 1000, 'unixepoch', 'localtime') = ? and " +
+                "strftime('%Y', date / 1000, 'unixepoch', 'localtime') = ? " +
                 " group by payment_mode";
 
         Cursor cursor = db.rawQuery(sql, new String[]{monthFormatted, String.valueOf(year)});
@@ -120,8 +120,8 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         String monthFormatted = String.format("%02d", monthSelected);
 
         String sql = "select * from " + TABLE_NAME +
-                " where strftime('%m', date / 1000, 'unixepoch') = ? and " +
-                "strftime('%Y', date / 1000, 'unixepoch') = ? and " +
+                " where strftime('%m', date / 1000, 'unixepoch', 'localtime') = ? and " +
+                "strftime('%Y', date / 1000, 'unixepoch', 'localtime') = ? and " +
                 " payment_mode = ? order by date DESC;";
 
         Cursor cursor = db.rawQuery(sql, new String[]{monthFormatted, String.valueOf(year), paymentMode});
@@ -133,8 +133,8 @@ public class SQLiteTransactionRepository implements TransactionRepository{
         String monthFormatted = String.format("%02d", monthSelected);
 
         String sql = "select * from " + TABLE_NAME +
-                " where strftime('%m', date / 1000, 'unixepoch') = ? and " +
-                "strftime('%Y', date / 1000, 'unixepoch') = ? and " +
+                " where strftime('%m', date / 1000, 'unixepoch', 'localtime') = ? and " +
+                "strftime('%Y', date / 1000, 'unixepoch', 'localtime') = ? and " +
                 " category = ? order by date DESC;";
 
         Cursor cursor = db.rawQuery(sql, new String[]{monthFormatted, String.valueOf(year), category});
